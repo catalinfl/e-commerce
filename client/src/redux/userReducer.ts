@@ -12,6 +12,9 @@ const initialState: initialState = {
     error: false
 } 
 
+export interface PayloadActionForDispatch extends PayloadAction {
+   data: () => {}
+}
 
 const userSlice = createSlice({
     name: "user",

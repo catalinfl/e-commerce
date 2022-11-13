@@ -7,8 +7,8 @@ import { editProduct, getProduct, getProducts, postProduct } from "../controller
 
 const router = express.Router();
 
-router.get('/', verifyToken, getProducts);
-router.get('/:id', verifyToken, getProduct);
+router.get('/', getProducts);
+router.get('/:id', getProduct);
 router.post('/', verifyTokenAndAdmin, postProduct);
 router.put('/:id', verifyTokenAndAdmin, editProduct);
 

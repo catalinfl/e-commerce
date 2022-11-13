@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { createBrowserRouter, RouterProvider, Route, RouterProviderProps } from "react-router-dom"
 import Home from './pages/Home/Home'
-// import Cart from './components/Navbar/Navbar'
+import Cart from './components/Navbar/Navbar'
 import Search from './pages/Search/Search'
 import CardPage from './pages/CardPage/CardPage'
 import { ReactElement } from 'react'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import { Provider } from "react-redux"
+import { store, persistor } from "./redux/store"
+import { PersistGate } from 'redux-persist/integration/react'
 
 type RouterProps = {
    path?: string,
@@ -23,7 +26,7 @@ const router  = createBrowserRouter([
     errorElement: <h1> Insert error element </h1>
   },
   {
-    path: '/products/:id',
+    path: '/product/:id',
     element: <CardPage />
   },
   {
@@ -41,9 +44,12 @@ const router  = createBrowserRouter([
 ])
 
 
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null} >
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>   
 )
 
