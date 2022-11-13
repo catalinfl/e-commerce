@@ -1,0 +1,370 @@
+@mixin SliderButton {
+    border: none;    // top: 10px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: rgba(grey, 0.2);
+    padding: 5px;
+    font-size: 50px;   
+    cursor: pointer;
+}
+
+@mixin PageTitle {
+    font-size: 35px;
+    @include titleFont;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    margin-left: 10px;
+    width: 100%;
+    border-bottom: solid 3px #21c468;
+}
+
+@mixin Container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+@mixin Specifications {
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 2px rgba(grey, 0.5);
+    margin-top: 10px;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+@mixin titleFont {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.product {
+    display: flex;
+    justify-content: center;
+
+    .productContainer {
+ 
+        display: flex;
+        flex-direction: column;
+        width: 1300px;
+        max-width: 1300px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        .productCategory {
+            font-size: 14px;
+
+            .productC {
+                color: rgb(38, 118, 38);
+            }
+        }
+
+        .productTitle {
+            font-size: 46px;
+            color: black;
+        }
+
+        .productCode {
+            background-color: rgba(grey, 0.3);
+            width: 300px;
+            text-align: center;
+            color: black;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .productRating {
+            margin: 10px 0px;
+
+            &:hover {
+                color:rgb(38, 118, 38);
+                cursor: pointer;
+            }
+        }
+
+        .productPrincipalContainer {
+            display: flex;
+            height: 800px;
+
+            .productSlider {
+                flex: 1;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                .productImageContainer {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    overflow: scroll;
+                    overflow-x: hidden;
+
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+
+
+                    .productImagePng {
+                        width: 130px;
+                        height: 110px;
+                        cursor: pointer;
+                        border: solid 1px grey;
+
+
+                        border-radius: 10px 0px 10px 0px;
+                        
+                        &:active {
+                            border: solid 2px green;
+                        }
+
+                        &::selection {
+                            background-color: transparent;
+                        }
+                    }
+                }
+
+                .productSliderButtonUp {
+                    @include SliderButton;
+                    top: 50px;
+                    left: 15px;
+                         
+                }
+
+                .productSliderButtonDown {
+                    @include SliderButton;
+                    bottom: 50px;
+                    left: 15px;                         
+                }
+
+            }
+
+            .productPrincipal {
+                flex: 5;
+                display: flex;
+                align-items: center;
+                 justify-content: center;
+
+                .productPrincipalImage {
+                width: 600px;
+                height: 550px;
+                cursor: pointer;
+
+                &::selection {
+                    background-color: transparent;
+                }
+            }
+        }
+            }
+
+            .productOptions {
+                flex: 2;   
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                padding-left: 10px;
+                padding-right: 10px;
+
+                .productPrices {
+
+                    .oldPriceContainer {
+                        display: flex;
+                        flex-direction: row;
+                        padding: 10px;
+                        align-items: center;
+                        margin-bottom: -21px;                
+
+                        .productOldPrice {
+                            font-size: 15px;
+                            text-decoration: line-through;
+                            color: grey;
+                            margin-bottom: -15px;
+                        }
+
+                        .productReduced {
+                            font-size: 16px;
+                            margin-left: 5px;
+                            font-weight: 800;
+                            background-color: red;
+                            color: white;
+                            padding: 5px;
+                            border-radius: 10px;
+                        }
+                    }
+
+                    .productNewPrice {
+                        font-size: 36px;
+                        -webkit-text-fill-color: transparent;
+                        -webkit-background-clip: text;
+                        background-image: linear-gradient(to left, #086a32, #2dba3b);
+                        font-weight: 700;
+                    }
+
+                    .productGreenTax {
+                        color:rgb(38, 118, 38);
+                        font-size: 13px;
+                    }
+
+                    .productStock {
+                        color: green;
+                    }
+                }
+
+                .productWarranty {
+                    font-size: 12px;
+                    display: flex;
+                    align-items: center;
+                    margin-top: 60px;
+                    text-align: center;
+                    margin-left: auto;
+                    margin-right: auto;
+                    gap: 5px;
+                }
+
+                .productBuyButtonContainer {
+                    display: flex;
+                    margin-top: 10px;
+
+                    .productBuyButton {
+                        width: 100%;
+                        outline: none;
+                        border: none;
+                        border-radius: 0px 10px 0px 10px;
+                        padding: 15px;
+                        background-color: green;
+                        color: white;
+                        cursor: pointer;
+                    }
+                }
+
+                .productFavorite {
+                    display: flex;
+                    margin-top: 20px;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: linear 1s;
+                    width: 30%;
+                    height: 25px;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: red;
+                        color: black;
+                        border-radius: 5px;
+
+                    }
+
+                    .favoriteIcon {
+                        background-color: red;
+                        color: white;
+                        justify-content: space-around;
+                        display: flex;
+                        border-radius: 5px;
+                        align-items: center;
+                        height: 100%;
+                        width: 100%;
+                    }
+        
+
+                    &::selection {
+                        background-color: transparent;
+                    }
+                }
+
+
+                .productServices {
+                    flex-direction: column;
+                    margin-top: 10px;
+
+                    .servicesTitle {
+                        color: black;
+                        width: 40px;
+                        font-size: 25px;
+                        font-weight: 500;
+                        border-bottom: solid 1px green;
+                        margin-bottom: 20px;
+                    }
+
+                    .servicesContainer {
+                        display: flex;
+                        flex-direction: column;
+                        margin-top: 20px;
+                        
+                        .serviceName {
+                            margin-bottom: 10px;
+                            margin-top: 5px;
+                            font-weight: 700;
+                        }
+
+                        .checkboxItem {
+                            margin-top: 5px;
+
+                        .checkboxItemType {
+                            margin-right: 5px;
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+    
+            .productOffer {
+                flex: 2;
+            }
+
+            .productRecommendations {
+                display: flex;
+                flex-direction: column;
+                margin-top: 25px;
+                width: 100%;
+
+                .productRecommended {
+                    @include PageTitle;
+                }
+
+                .productRecommendContainer {
+                    @include Container;
+                }
+            }
+            .productArrowUp {
+                font-size: 40px;
+            }
+            .productArrowDown {
+                font-size: 40px;
+            }
+
+            .productDescription {
+                @include Specifications;
+            }
+
+            .productSpecifications {
+                @include Specifications;
+            }
+
+            .productRatings {
+                @include Specifications;
+            }
+
+            .productAsk {
+                @include Specifications;
+            }
+
+            .productSimilarTitle {
+                @include PageTitle;
+            }
+
+            .productSimilarContainer {
+                @include Container;
+            }
+
+           
+}
+
+
+

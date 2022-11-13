@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+.searchpage {
+    display: flex;
+    // border: solid 1px #000;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    .searchCategory {
+        font-size: 14px;
+        text-align: left;
+        max-width: 1300px;
+        width: 1300px;
+        margin: auto;
+
+        .searchC:hover {
+            color: green;
+            cursor: pointer;
+        }
+    } 
+
+
+    .searchpageContainer {
+        max-width: 1300px;
+        width: 1300px;
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        flex-direction: row;
+    
+        
+        
+        .searchpageCheckContainers {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            flex: 1;
+
+
+            .searchpageItem {
+                display: flex;
+                flex-direction: column;
+                padding: 5px;
+                margin-bottom: 10px;
+
+                .searchpageCategories {
+                    font-size: 15px;
+                    margin-bottom: 10px;
+                }
+
+                .searchpageItemCheckbox {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+            }
+        }
+
+        .searchpageItemsSearched {
+            flex: 4;
+
+            .searchpageSort {
+                display: flex;
+                padding: 20px;
+                align-items: center;
+                gap: 10px;
+
+                .searchpageSelection {
+                    margin-top: 2px;
+                    outline: none;
+                    border: solid green 1px;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    font-family: 'Segoe UI';
+                    padding: 5px;
+                }
+
+                .searchpageOption {
+                    color: black;
+                    border: solid 1px #000;
+
+                }
+                
+            }
+
+            .searchpageResultTitle {
+                font-size: 30px;
+                font-weight: 700;
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            }
+            .searchpageItemsContainer {
+
+                display: flex;
+                flex-direction: column;
+
+            .searchpageItemsFound {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+        }
+    }
+
+    }
+}
+

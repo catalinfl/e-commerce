@@ -1,0 +1,40 @@
+$hover-color: hsl(145, 64%, 43%);
+
+
+@mixin triangle {
+    background-color: transparent;
+    border-top: solid transparent 10px;
+    border-left: solid transparent 10px;
+    border-right: solid transparent 10px;
+    border-bottom: solid white 10px;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: -20px;
+    right: 150px;
+}
+
+.cart {
+
+    display: flex;
+    background-color: white;
+    position: absolute;
+    z-index: 3;
+    top: 50px;
+    right: 125px;
+
+    .cartContainer {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: auto;
+        padding: 15px;
+        color: grey;
+        position: relative;
+    }
+
+    .cartContainerTriangle {
+        @include triangle;
+    }
+
+}

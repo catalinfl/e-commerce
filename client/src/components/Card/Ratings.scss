@@ -1,0 +1,21 @@
+.cardRating {
+    display: flex;
+    // border: solid 1px #000;
+
+
+    .cardStars {
+        color: orange;
+    }
+
+    .cardRatingNumber {
+        color: grey;
+        margin-left: 5px;
+        font-size: 12px;
+        align-items: center;
+
+    }
+    
+
+
+
+}

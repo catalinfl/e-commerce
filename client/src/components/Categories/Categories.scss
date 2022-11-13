@@ -1,0 +1,66 @@
+$background-color: hsl(127, 81%, 43%);
+$hover-color: hsl(145, 64%, 43%);
+
+// max-width: 1300px
+
+@mixin button {
+    cursor: pointer;
+    padding: 10px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 17px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 100%;
+    padding: 0px 30px;
+    // border-radius: 10px;
+}
+
+
+.categories {
+    color: white;
+    width: 100vw;
+    background: $background-color;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+
+    
+
+    .categoriesContainer {
+        height: 50px;
+        align-items: center;
+        max-width: 1300px;
+        display: flex;
+        flex: 1;
+
+
+
+        .categoriesItem {
+            @include button;
+            justify-content: left;
+  
+            &::selection {
+                color: inherit;
+                background-color: none;
+            }
+        
+            
+            &:hover {
+                background-color: $hover-color;
+                // border-radius: 20px;
+            }
+        }       
+    
+        .principal {
+            background-color: hsl(153, 81%, 43%);
+            align-items: center;
+            display: flex;
+            gap: 20px;
+        }
+
+    }
+}
+
