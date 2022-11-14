@@ -2,8 +2,14 @@ import React, { useState } from 'react'
 import './CardProduct.scss'
 import Image from "../../assets/CartImage.png"
 import Ratings from './Ratings'
+import Product from '../Product/Product'
 
-const CardProduct: React.FC = () => {
+
+interface PropsForCards {
+    price: String
+}
+
+const CardProduct = ({ price }: PropsForCards) => {
 
   return (
     <div className="cardItem">
@@ -21,14 +27,14 @@ const CardProduct: React.FC = () => {
         </div>
         <div className="cardOldPriceContainer">
         <div className="cardOldPrice">
-            35435,32 lei
+            500 lei
         </div>
         <div className="cardReduce">
             20%
         </div>
         </div>
         <div className="cardPrice">
-            35333,65 lei
+            {price}
         </div>
         <div className="cardButton">
             <button className="cardBuyButton"> Adaugă în coș </button>

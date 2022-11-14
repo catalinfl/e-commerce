@@ -11,21 +11,6 @@ import { publicRequest, userRequest } from '../../requestMethods'
 
 
 const CardPage: React.FC = () => {
-  
-  const location = useLocation();
-  const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState<any>();
-  
-   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/product/" + id);
-        setProduct(res.data);
-      } catch {}
-    };
-    getProduct();
-  }, [id]);
-  
 
 
   return (

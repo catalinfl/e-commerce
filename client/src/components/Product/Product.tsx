@@ -1,4 +1,4 @@
-import React, { RefObject, MutableRefObject } from 'react'
+import React, { RefObject, MutableRefObject, useRef } from 'react'
 import './Product.scss'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import { BsSuitHeart } from "react-icons/bs"
@@ -6,9 +6,10 @@ import { AiOutlineInfoCircle, AiOutlineArrowUp, AiOutlineArrowDown } from "react
 import Image from '../../assets/CartImage.png'
 import Image2 from '../../assets/Logo.png'
 import CardProduct from '../Card/CardProduct'
-import { useRef, useState } from 'react'
 import { IconType } from 'react-icons'
-
+import { useState, useEffect } from "react"
+import { publicRequest } from '../../requestMethods'
+import { useLocation } from 'react-router-dom'
 
 
 
@@ -28,7 +29,37 @@ const Product: React.FC = () => {
         principalRef.current.src = `${name}`;
         }
     }
+  
+    interface productProps {
+        name?: string;
+        price?: string;
+        warranty?: string,
+        description?: string,
+        specifications?: string,
+        reviewStars?: string,
+        ask?: String | String[],
+        images?: string,
+        categories?: string,
+        img?: Array<string>,
+    }
 
+      
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const [product, setProduct] = useState<productProps>({});
+  
+   useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/product/" + id);
+        setProduct(res.data);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+  
+
+  console.log(product.img);
     // const sliderButton: Function = (direction: string) => {
     //     if (direction === "up") {
     //         buttonRef?.current?.scrollTo(0, 0);
@@ -38,6 +69,7 @@ const Product: React.FC = () => {
     //     }
     // }
    
+    const refe = React.useRef<any>();
 
     return (
     <div className="product">
@@ -46,41 +78,23 @@ const Product: React.FC = () => {
                 IT / Calculatoare / <span className="productC"> DVD-ROM </span>
             </p>
             <h1 className="productTitle">
-                DVD-ROM Asus Lorem Ipsum
+                {product.name}
             </h1>
             <p className="productCode">
                 Cod produs: ETWATOAWJTEAWOTKEWAW
             </p>
             <p className="productRating">
-                Fii primul care evalueaza acest produs
+                {product.reviewStars ? `${product.reviewStars} persoane au evaluat acest produs` : "Fii primul care evalueaza acest produs"}
             </p>
             <div className="productPrincipalContainer">
                 <div className="productSlider">
                     <BsArrowUp onClick={() => buttonRef?.current?.scrollTo({ top: buttonRef?.current?.scrollTop - 200, behavior: 'smooth' })}className="productSliderButtonUp"/>
                     <div ref={buttonRef} className="productImageContainer">
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />    <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image2)} src={Image2} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
-                        <img className="productImagePng" onClick={() => principalImageFunc(Image)} src={Image} alt="test" />
+                        <img className="productImagePng" ref={refe} onClick={() => (refe.current?.src)} src={"https://i.ibb.co/YkkXwKV/1429706.jpg"} alt="test" />
+                        {   product.img?.map((prod, index) => 
+                            <img className="productImagePng" onClick={() => principalImageFunc(Image2)} key={index} src={prod}/>
+                        )
+                        };
                     </div>
                     <BsArrowDown onClick={() => { buttonRef?.current?.scrollTo({top: buttonRef?.current?.scrollTop + 200, behavior: 'smooth'})}} className="productSliderButtonDown" />
                 </div>
@@ -91,11 +105,11 @@ const Product: React.FC = () => {
                     <div className="productPrices">
                         <div className="oldPriceContainer">
                         <div className="productOldPrice">
-                            352552,32 lei</div>
+                            Old lei</div>
                              <div className="productReduced"> 20% </div>
                         </div>
                         <div className="productNewPrice">
-                            2353,32 lei
+                        {product['price']} lei
                         </div>
                         <div className="productGreenTax"> Include taxa verde </div>
                         <div className="productStock">
@@ -179,25 +193,25 @@ const Product: React.FC = () => {
             <div className="productRecommendations">
                 <p className="productRecommended"> Produse recomandate </p>
                 <div className="productRecommendContainer">
+                {/* <CardProduct />
                 <CardProduct />
                 <CardProduct />
-                <CardProduct />
-                <CardProduct />
+                <CardProduct /> */}
                 </div>
                 <div className="productRecommendContainer">
+                {/* <CardProduct />
                 <CardProduct />
                 <CardProduct />
-                <CardProduct />
-                <CardProduct />
+                <CardProduct /> */}
                 </div>
             </div>
             <div className="productSimilar">
                 <p className="productSimilarTitle"> Produse similare </p>
                 <div className="productSimilarContainer">
+                {/* <CardProduct />
                 <CardProduct />
                 <CardProduct />
-                <CardProduct />
-                <CardProduct />
+                <CardProduct /> */}
                 </div>
             </div>
         </div>

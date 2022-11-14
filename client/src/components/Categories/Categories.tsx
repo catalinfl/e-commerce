@@ -3,6 +3,7 @@ import './Categories.scss'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { useState, useEffect } from 'react'
 import CategoriesMenu from './CategoriesMenu'
+import { Link } from 'react-router-dom'
 
 
 const Categories: React.FC = () => {
@@ -20,7 +21,7 @@ const Categories: React.FC = () => {
               <CategoriesMenu />
               </div>
             }
-            <button className="categoriesItem"> Item 2 </button>
+           <Link className="categoriesItem" to='/product/636c1a743f63b11cb3085bb9'> <button className="categoriesItem"> Item 2 </button> </Link> 
             <button className="categoriesItem"> Item 3 </button>
             <button className="categoriesItem"> Item 4 </button>
         </div>
