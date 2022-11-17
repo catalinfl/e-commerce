@@ -6,10 +6,28 @@ import Product from '../Product/Product'
 
 
 interface PropsForCards {
-    price: String
+    price: string
+    title: string,
+    rating: string | undefined,
+    reduce?: string,
+    image: string,
+    oldPrice?: string,
+    reviews?: undefined | string
 }
 
-const CardProduct = ({ price }: PropsForCards) => {
+const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, reduce, image, oldPrice}: PropsForCards) => {
+
+    var ratingToPass: any;
+    if (rating === undefined) {
+        ratingToPass = 0;
+    }
+    else ratingToPass = parseFloat(rating).toPrecision(3);
+
+    var reviewsToPass: any;
+    if (reviews === undefined) {
+        reviewsToPass = 0;
+    }
+    else reviewsToPass = parseInt(reviews);
 
   return (
     <div className="cardItem">
@@ -17,24 +35,30 @@ const CardProduct = ({ price }: PropsForCards) => {
             <img className="cartImage" src={Image} alt="image" />
         </div>
         <div className="cardDesc">
-            Lorem ipsum dolor sit ametetww consectetur adipisicing elit. M
+            {title}
         </div>
         <div className="cardAvailability">
-        &#9989; in stock
+        &#9989; In stock
         </div>
-        <div className="cardRatings">
-            <Ratings />
-        </div>
+        {rating ? <div className="cardRatings">
+            <Ratings stars={ratingToPass} reviews={reviewsToPass}/>
+        </div> : null}
         <div className="cardOldPriceContainer">
+        { oldPrice ? 
         <div className="cardOldPrice">
-            500 lei
+            {oldPrice} lei
         </div>
-        <div className="cardReduce">
+        : null
+        }
+        {reduce ? 
+            <div className="cardReduce">
             20%
         </div>
+        : null    
+        }
         </div>
         <div className="cardPrice">
-            586,322 lei
+        {price} lei
         </div>
         <div className="cardButton">
             <button className="cardBuyButton"> Adaugă în coș </button>
