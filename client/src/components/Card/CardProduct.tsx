@@ -34,7 +34,7 @@ const CardProduct = ({ price }: PropsForCards) => {
         </div>
         </div>
         <div className="cardPrice">
-            {price}
+            586,322 lei
         </div>
         <div className="cardButton">
             <button className="cardBuyButton"> Adaugă în coș </button>

@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom'
 
 
 
+
 const Product: React.FC = () => {
 
     const principalRef = React.useRef<HTMLImageElement>(null);
@@ -48,6 +49,28 @@ const Product: React.FC = () => {
   const id = location.pathname.split('/')[2];
   const [product, setProduct] = useState<productProps>({});
   
+  
+  const [isProdDescOpen, setIsProdDescOpen] = useState<boolean>(true);
+  const [isProdSpecOpen, setIsProdSpecOpen] = useState<boolean>(false);
+  const [isProdReviewOpen, setIsProdReviewOpen] = useState<boolean>(false);
+  const [isProdAskOpen, setIsProdAskOpen] = useState<boolean>(false);
+  
+
+  const openTabFunction: Function = (path: string) => {
+        if (path === 'desc') {
+            setIsProdDescOpen(!isProdDescOpen);
+        }
+        if (path === 'spec') {
+            setIsProdSpecOpen(!isProdSpecOpen);
+        }
+        if (path === 'review') {
+            setIsProdReviewOpen(!isProdReviewOpen);
+        }
+        if (path === 'ask') {
+            setIsProdAskOpen(!isProdAskOpen);
+        }
+    }
+  
    useEffect(() => {
     const getProduct = async () => {
       try {
@@ -59,7 +82,6 @@ const Product: React.FC = () => {
   }, [id]);
   
 
-  console.log(product.img);
     // const sliderButton: Function = (direction: string) => {
     //     if (direction === "up") {
     //         buttonRef?.current?.scrollTo(0, 0);
@@ -94,7 +116,7 @@ const Product: React.FC = () => {
                         {   product.img?.map((prod, index) => 
                             <img className="productImagePng" onClick={() => principalImageFunc(Image2)} key={index} src={prod}/>
                         )
-                        };
+                        }
                     </div>
                     <BsArrowDown onClick={() => { buttonRef?.current?.scrollTo({top: buttonRef?.current?.scrollTop + 200, behavior: 'smooth'})}} className="productSliderButtonDown" />
                 </div>
@@ -125,7 +147,7 @@ const Product: React.FC = () => {
                     <div className="productFavorite" onClick={() => setIsClicked(!isClicked)}>
                         { !isClicked ? 
                         <> 
-                        <BsSuitHeart /> Favorite 
+                        <BsSuitHeart style={{color: 'black'}}/> <span style={{color: 'grey'}}> Favorite </span>
                         </> 
                         : 
                         <> 
@@ -169,26 +191,66 @@ const Product: React.FC = () => {
                     Not available right now
                 </div> */}
             </div>
-            <div className="productDescription">
+        <div className="productAboutContainer">
+            <div className="productDescription" onClick={() => openTabFunction('desc')}>
                 <h1 className="productDescriptionTitle"> Descriere </h1> 
-                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdDescOpen ? 
+                <AiOutlineArrowUp className="productArrowUp"/>
+                :
                 <AiOutlineArrowDown className="productArrowDown"/>
+                }
             </div>
-            <div className="productSpecifications">
+                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdDescOpen ? 
+                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                : null
+                }
+        </div>
+        <div className="productAboutContainer">
+            <div className="productSpecifications" onClick={() => openTabFunction('spec')}>
                 <h1 className="productSpecificationsTitle"> Specificatii </h1>
-                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdSpecOpen ? 
+                <AiOutlineArrowUp className="productArrowUp"/>
+                :
                 <AiOutlineArrowDown className="productArrowDown"/>
+                }
             </div>
-            <div className="productRatings">
-                <h1 className="productRatingsTitle"> Reviewuri </h1>
                 {/* <AiOutlineArrowUp className="productArrowUp"/> */}
-                <AiOutlineArrowDown className="productArrowDown"/> 
+                {isProdSpecOpen ? 
+                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                : null
+                }
+        </div>
+        <div className="productAboutContainer">
+            <div className="productReviews" onClick={() => openTabFunction('review')}>
+                <h1 className="productReviewsTitle"> Reviewuri </h1>
+                {isProdReviewOpen ? 
+                <AiOutlineArrowUp className="productArrowUp"/>
+                :
+                <AiOutlineArrowDown className="productArrowDown"/>
+                }
             </div>
-            <div className="productAsk">
+                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdReviewOpen ? 
+                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                : null
+                }
+        </div>
+        <div className="productAboutContainer">
+            <div className="productAsk" onClick={() => openTabFunction('ask')}>
                 <h1 className="productAskTitle"> Intrebari </h1>
-                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdAskOpen ? 
+                <AiOutlineArrowUp className="productArrowUp"/>
+                :
                 <AiOutlineArrowDown className="productArrowDown"/>
+                }
             </div>
+                {/* <AiOutlineArrowUp className="productArrowUp"/> */}
+                {isProdAskOpen ? 
+                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                : null
+                }
+        </div>
             {/*  recommendations and similars */}
             <div className="productRecommendations">
                 <p className="productRecommended"> Produse recomandate </p>
