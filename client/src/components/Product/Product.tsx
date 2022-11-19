@@ -255,10 +255,10 @@ const Product: React.FC = () => {
             <div className="productRecommendations">
                 <p className="productRecommended"> Produse recomandate </p>
                 <div className="productRecommendContainer">
-                <CardProduct price={"3"} title={"Salut"} image={"test"} rating={"3.3"} reviews={"3"}/>
-                <CardProduct price={"120"} title={"mihai"} image={"img2"} rating={"3.5"} reviews={"5"}/>
-                <CardProduct price={"150"} title={"lol"} image={"img3"} rating={"3.8"} reviews={"15"}/>
-                <CardProduct price={"250"} title={"mircea"} image={"img4"} rating={"4.8"} reviews={"20"}/>
+                <CardProduct price={"150"} oldPrice={"250"} title={"Salut"} image={"test"} rating={"3.3"} reviews={"3"}/>
+                <CardProduct price={"120"} oldPrice={"125"} title={"mihai"} image={"img2"} rating={"3.5"} reviews={"5"}/>
+                <CardProduct price={"350"} oldPrice={"450"} title={"lol"} image={"img3"} rating={"3.8"} reviews={"15"}/>
+                <CardProduct price={"250"} oldPrice={"25000"} title={"mircea"} image={"img4"} rating={"5"} reviews={"20"}/>
                 </div>
                 <div className="productRecommendContainer">
                 {/* <CardProduct />

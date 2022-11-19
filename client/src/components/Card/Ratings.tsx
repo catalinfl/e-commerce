@@ -15,49 +15,13 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
   const [useStars, setUseStars] = useState<number>(stars);
   const [useReviews, setUseReviews] = useState<number | (() => number) | undefined>(reviews);
   
-  var fiveStars, fourAndHalfStars, fourStars, threeAndHalfStars, threeStars, twoAndHalfStars, twoStars, oneAndHalfStar, oneStar, zeroStar;
-
-  const createRating = (stars: number) => {
-      if (!stars) {
-        zeroStar = true;
-      }
-      if (stars == 5.00) {
-        fiveStars = true;
-      }
-      if (stars >= 4.50 && stars < 5.00) {
-        fourAndHalfStars = true;
-      }
-      if (stars >= 4.00 && stars < 4.50) {
-        fourStars = true;
-      }
-      if (stars >= 3.50 && stars < 4.00) {
-        threeAndHalfStars = true;
-      }
-      if (stars >= 3.00 && stars < 3.50) {
-        threeStars = true;
-      }
-      if (stars >= 2.50 && stars < 3.00) {
-        twoAndHalfStars = true;
-      }
-      if (stars >= 2.00 && stars < 2.50) {
-        twoStars = true;
-      }
-      if (stars >= 1.50 && stars < 2.00) {
-        oneAndHalfStar = true;
-      }
-      if (stars >= 1.00 && stars < 1.50) {
-        oneStar = true;
-      }
-  }
-  
-  createRating(stars);
   
 
   return (
     <>
     <div className="cardRating">
     <div className="cardStars">
-    { fiveStars ?       
+    { (stars == 5.00) ?       
       <>
       <IoMdStar />
       <IoMdStar />
@@ -65,7 +29,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStar />
       <IoMdStar />
       </>
-     : fourAndHalfStars ? 
+     : (stars >= 4.50 && stars < 5.00) ? 
       <>
       <IoMdStar />
       <IoMdStar />
@@ -73,8 +37,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStar />
       <IoMdStarHalf />
       </>
-      :
-      fourStars ?
+      : (stars >= 4.00 && stars < 4.50) ?
       <>
       <IoMdStar />
       <IoMdStar />
@@ -82,8 +45,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStar />
       <IoMdStarOutline />
       </>
-      :      
-      threeAndHalfStars ? 
+      : (stars >= 3.50 && stars < 4.00) ? 
       <>
       <IoMdStar />
       <IoMdStar />
@@ -91,7 +53,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarHalf />
       <IoMdStarOutline />
       </>
-      : threeStars ? 
+      : (stars >= 3.00 && stars < 3.50) ? 
       <>
       <IoMdStar />
       <IoMdStar />
@@ -99,8 +61,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarOutline />
       <IoMdStarOutline />
       </>
-      : twoAndHalfStars
-      ? 
+      : (stars >= 2.50 && stars < 3.00) ? 
       <>
       <IoMdStar />
       <IoMdStar />
@@ -108,7 +69,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarOutline />
       <IoMdStarOutline />
       </>
-      : twoStars ? 
+      : (stars >= 2.00 && stars < 2.50) ? 
       <>
       <IoMdStar />
       <IoMdStar />
@@ -116,7 +77,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarOutline />
       <IoMdStarOutline />
       </>
-      : oneAndHalfStar ? 
+      : (stars >= 1.50 && stars < 2.00) ? 
       <>
       <IoMdStar />
       <IoMdStarHalf />
@@ -124,7 +85,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarOutline />
       <IoMdStarOutline />
       </>
-      : oneStar ?
+      : (stars >= 1.00 && stars < 1.50) ? 
       <>
       <IoMdStar />
       <IoMdStarOutline />
@@ -132,7 +93,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       <IoMdStarOutline />
       <IoMdStarOutline />
       </>
-      : zeroStar ? 
+      : (stars === 0) ? 
       <>
       <IoMdStarOutline />
       <IoMdStarOutline />
@@ -142,9 +103,7 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       </> : null
     }
     </div>
-    
-    
-    <p className="cardRatingNumber"> {stars ? useStars : null} ({(reviews == 5) ?  "To do tomorrow" : null} reviews) </p> 
+    <p className="cardRatingNumber"> {stars ? useStars : null}       ({reviews} reviews) </p> 
     </div>
       </>
   )
