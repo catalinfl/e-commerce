@@ -1,23 +1,35 @@
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import dotenv from "dotenv"
-import bcrypt, { compare } from "bcryptjs"
-import { visitFunctionBody } from "typescript";
-import { User } from "../utils/verifyToken";
-import { Request, Response} from "express"
+import User from "../models/User"
 
 dotenv.config();
 
-export interface Requestsson extends Request {
-    password: Passwords
-}
-
-type Passwords = {
-    password: string;
-}
-
-const comparePasswords = async  (req: Request, res: Response) => { 
-    if (req.body.password) {
-        
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const getUser = await User.findById({ _id: req.params.id });
+        res.status(200).json(getUser);
+    }
+    catch(err) {
+        res.status(400).json(err);
     }
 }
 
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const getUsers = await User.find();
+        res.status(200).json(getUsers);
+    }
+    catch(err) {
+        res.status(404).json(err);
+    }
+}
+
+export const editUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const editPost = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true, upsert: true });
+        res.status(201).json(editPost);
+    }
+    catch(err) {
+        res.status(404).json(err);
+    }
+}

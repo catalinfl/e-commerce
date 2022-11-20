@@ -6,6 +6,8 @@ import productRoute from './routes/product';
 import express from "express"
 import cors from "cors";
 import orderRoute from './routes/order';
+import userRoute from './routes/user';
+
 
 dotenv.config();
 
@@ -34,6 +36,7 @@ app.use(cors());
 app.use('/auth', authRoute);
 app.use('/product', productRoute);
 app.use('/order', orderRoute);
+app.use('/user', userRoute);
 
 app.listen(PORT || 3000, () => {
     console.log("It's working!")

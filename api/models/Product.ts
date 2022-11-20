@@ -3,15 +3,19 @@ import mongoose from "mongoose"
 interface Product {
     name: string;
     price: string;
-    warranty: string,
+    warranty?: string,
+    installService?: string,
     description: string,
     specifications: string,
     reviewStars: string,
+    reviewComments: String | Array<string>,
     ask: String | String[],
-    images: string,
     categories: string,
-    img: Array<String>
-
+    img: Array<String>,
+    subcategory?: string,
+    oldPrice?: string,
+    productCode: string,
+    inStock: string
 }
 
 const ProductSchema = new mongoose.Schema<Product>(
@@ -20,12 +24,17 @@ const ProductSchema = new mongoose.Schema<Product>(
         price: { type: String, required: true},
         warranty: { type: String, required: true},
         description: { type: String, required: true},
-        specifications: { type: String, required: true},
         reviewStars: { type: String },
-        ask: { type: Array },
-        images: { type: String },
-        categories: { type: String },
-        img: [{ type: String, required: true}]
+        specifications: { type: String, required: true},
+        reviewComments: { type: String },
+        installService: { type: String },
+        oldPrice: { type: String }, 
+        ask: [{ type: String }],
+        categories: { type: String, required: true},
+        subcategory: { type: String },
+        img: [{ type: String, required: true}],
+        productCode: { type: String, unique: true, required: true},
+        inStock: {type: String, required: true}
     },
     {timestamps: true}
     )

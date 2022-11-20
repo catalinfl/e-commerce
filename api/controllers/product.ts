@@ -37,13 +37,17 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 
 export const editProduct = async (req: Request, res: Response) => {
         try {
+            const oldPriceKnew = await Product.findById({_id: req.params.id});
+            
             const updatedProduct = await Product.findByIdAndUpdate(
                 req.params.id,
-                { $set: req.body },
+                {   oldPrice: oldPriceKnew.price,
+                    $set: req.body
+                },
                 { new: true } )
-                res.status(200).json(updatedProduct);
+                res.status(200).json(updatedProduct);       
             }
-        catch(err) {
+            catch(err) {
             res.status(404).json(err);
         }
     }

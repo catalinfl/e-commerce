@@ -22,6 +22,7 @@ const Product: React.FC = () => {
     const [isClicked, setIsClicked] = React.useState<boolean>(false);
     // const favoriteRef = React.forwardRef<HTMLButtonElement>(null);
 
+
     const principalImageFunc: Function = (name: string) => {
         if (principalRef.current === null) {
             console.log("Error");
@@ -38,16 +39,22 @@ const Product: React.FC = () => {
         description?: string,
         specifications?: string,
         reviewStars?: string,
+        reviewComments?: string,
+        installService?: string,
         ask?: String | String[],
-        images?: string,
+        images?: string | undefined,
         categories?: string,
-        img?: Array<string>,
+        subcategory?: string,
+        productCode?: string,
+        inStock?: string,
+        img: Array<string>,
+        oldPrice?: string
     }
 
       
   const location = useLocation();
   const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState<productProps>({});
+  const [product, setProduct] = useState<productProps>({img: []});
   
   
   const [isProdDescOpen, setIsProdDescOpen] = useState<boolean>(true);
@@ -80,8 +87,86 @@ const Product: React.FC = () => {
     };
     getProduct();
   }, [id]);
-  
 
+
+  var precision: string;
+  var reductionColor: string;
+
+  const calculatePercent: Function = (oldPrice: string, price: string): string => {    
+    var oldPriceInt: number = parseInt(oldPrice as string);
+    var newPriceInt: number = parseInt(price as string);
+    var percent: any;
+    var percentMinus = newPriceInt / oldPriceInt;
+    percent = (1 - percentMinus) * 100;
+    if (percent <= 0) return "";
+    var percentString = percent.toString();
+        
+        if (percentString.length > 2) {
+            precision = percentString.slice(0, percentString.indexOf("."));
+        }
+        
+        else precision = percentString;
+    
+    return precision;
+}
+
+
+
+const reductionColorCalculator: Function = (precision: string): string | null => {
+    var precisionInt = parseInt(precision);
+    if (precisionInt === 0) return null;
+    if (precisionInt < 20) {
+        return "yellow"; // yellow
+    }
+    if (precisionInt >= 20 && precisionInt < 30) {
+        return "red";
+    }
+    if (precisionInt > 30) {
+        return "red30";
+    }
+    return "";
+}
+    const comparePrices: Function = (price: string, oldPrice: string): boolean | undefined => {
+        if (oldPrice > price) {
+           return true;
+        }
+        else false;
+    }   
+
+    const [checkbox1, setCheckbox1] = useState<boolean>(false);
+    const [checkbox2, setCheckbox2] = useState<boolean>(false);
+
+
+    const onChangeCheckbox: Function = (): void => {
+        if (checkboxRef1.current.checked) {
+            console.log("case 1");
+            setCheckbox1(true);
+            setCheckbox2(false);
+        }
+        if (!checkboxRef1.current.checked) {
+            console.log("case 2");
+            setCheckbox1(false);
+        }
+        if (checkbox2 && checkboxRef1.current.checked) {
+            console.log("case 3");
+            setCheckbox2(false);
+            setCheckbox1(true);
+        }
+        if (checkboxRef2.current.checked) {
+            console.log("case 4");
+            setCheckbox1(false);
+            setCheckbox2(true);
+        }
+        if (!checkboxRef2.current.checked) {
+            console.log("case 5");
+            setCheckbox2(false);
+        }
+    }
+
+
+    precision = calculatePercent(product.oldPrice, product.price);
+
+    reductionColor = reductionColorCalculator(precision);
     // const sliderButton: Function = (direction: string) => {
     //     if (direction === "up") {
     //         buttonRef?.current?.scrollTo(0, 0);
@@ -90,6 +175,9 @@ const Product: React.FC = () => {
 
     //     }
     // }
+
+    const checkboxRef1 = useRef<any>();    
+    const checkboxRef2 = useRef<any>();
    
     const refe = React.useRef<any>();
 
@@ -97,13 +185,13 @@ const Product: React.FC = () => {
     <div className="product">
         <div className="productContainer">
             <p className="productCategory">
-                IT / Calculatoare / <span className="productC"> DVD-ROM </span>
+            {product.categories} / {product.subcategory} / <span className="productC"> {product.name} </span>
             </p>
             <h1 className="productTitle">
                 {product.name}
             </h1>
             <p className="productCode">
-                Cod produs: ETWATOAWJTEAWOTKEWAW
+                Cod produs: {product.productCode}
             </p>
             <p className="productRating">
                 {product.reviewStars ? `${product.reviewStars} persoane au evaluat acest produs` : "Fii primul care evalueaza acest produs"}
@@ -112,10 +200,9 @@ const Product: React.FC = () => {
                 <div className="productSlider">
                     <BsArrowUp onClick={() => buttonRef?.current?.scrollTo({ top: buttonRef?.current?.scrollTop - 200, behavior: 'smooth' })}className="productSliderButtonUp"/>
                     <div ref={buttonRef} className="productImageContainer">
-                        <img className="productImagePng" ref={refe} onClick={() => (refe.current?.src)} src={"https://i.ibb.co/YkkXwKV/1429706.jpg"} alt="test" />
-                        {   product.img?.map((prod, index) => 
-                            <img className="productImagePng" onClick={() => principalImageFunc(Image2)} key={index} src={prod}/>
-                        )
+                        { product.img.map((prod: string, index: number) => 
+                            <img className="productImagePng" onClick={() => principalImageFunc(product.img[index])} key={index} src={prod}/>
+                        ) 
                         }
                     </div>
                     <BsArrowDown onClick={() => { buttonRef?.current?.scrollTo({top: buttonRef?.current?.scrollTop + 200, behavior: 'smooth'})}} className="productSliderButtonDown" />
@@ -126,20 +213,21 @@ const Product: React.FC = () => {
                 <div className="productOptions">
                     <div className="productPrices">
                         <div className="oldPriceContainer">
-                        <div className="productOldPrice">
-                            Old lei</div>
-                             <div className="productReduced"> 20% </div>
+                            { (comparePrices(product.price, product.oldPrice)) ? <div className="productOldPrice"> {product.oldPrice} lei </div> : null  }
+                            {(comparePrices(product.price, product.oldPrice)) ? <div className={`productReduced ${reductionColor}`}> {precision}% </div> : null}
                         </div>
                         <div className="productNewPrice">
-                        {product['price']} lei
+                        {product.price} lei
                         </div>
                         <div className="productGreenTax"> Include taxa verde </div>
-                        <div className="productStock">
-                            În stoc &#10003;
+                            {product.inStock === "yes" ? 
+                        <div className={`productStock ${product.inStock}`}>
+                            In stoc &#10003; 
                         </div>
+                            : null}
                     </div>
                     <div className="productWarranty">
-                        <AiOutlineInfoCircle /> Acest produs include garantie 24 de luni
+                        <AiOutlineInfoCircle /> Acest produs include garantie {product.warranty}
                     </div>
                     <div className="productBuyButtonContainer">
                        <button className="productBuyButton">  Adaugă în coș </button> 
@@ -165,25 +253,25 @@ const Product: React.FC = () => {
                         <div className="servicesContainer">
                             <div className="serviceName"> Adauga extra garantie </div>
                             <div className="checkboxItem">
-                               <input className="checkboxItemType" type="radio" name="warranty" />
-                                 1 an - 11 lei
+                               <input className="checkboxItemType" ref={checkboxRef1} checked={checkbox1} onChange={() => onChangeCheckbox()} type="checkbox" id="extrawarranty" name="warranty" />
+                                 1 an - 100 lei
                             </div>
                             <div className="checkboxItem">
-                                <input className="checkboxItemType" type="radio" name="warranty" /> 
-                                2 ani - 15 lei
+                                <input className="checkboxItemType" ref={checkboxRef2} checked={checkbox2} onChange={() => onChangeCheckbox()} id="extrawarranty" type="checkbox" name="warranty" /> 
+                                2 ani - 180 lei
                             </div>
                         </div>
-                        <div className="servicesContainer">
+                        { product.installService!=="" ? <div className="servicesContainer">
                             <div className="serviceName"> Adauga serviciu instalare </div>
                             <div className="checkboxItem">
-                                <input className="checkboxItemType" type="radio" name="service"/>
+                                <input className="checkboxItemType" type="radio" />
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Et magnam enim aperiam modi mollitia tempore reiciendis 
                             </div>
                             <div className="checkboxItem">
-                                <input className="checkboxItemType" type="radio" name="service"/>
+                                <input className="checkboxItemType"  type="radio" />
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quae?
                             </div>
-                        </div>
+                        </div> : null}
                     </div>
                 </div>
                 {/* <div className="productOffer">
@@ -251,8 +339,8 @@ const Product: React.FC = () => {
                 : null
                 }
         </div>
-            {/*  recommendations and similars */}
             <div className="productRecommendations">
+            {/*  recommendations and similars */}
                 <p className="productRecommended"> Produse recomandate </p>
                 <div className="productRecommendContainer">
                 <CardProduct price={"150"} oldPrice={"250"} title={"Salut"} image={"test"} rating={"3.3"} reviews={"3"}/>

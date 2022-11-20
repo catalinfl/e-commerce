@@ -230,6 +230,26 @@
                             color: white;
                             padding: 5px;
                             border-radius: 10px;
+                            
+                            &.red {
+                                color: white;
+                                font-size: 13px;
+                                background-color: red;
+                            }
+                
+                            &.red30 {
+                                color: white;
+                                font-size: 15px;
+                                background-image: linear-gradient(70deg, red, black);
+                                background-color: red;
+                            }
+                
+                            &.yellow {
+                                color: rgb(55, 53, 53);
+                                background-image: linear-gradient(50deg, yellow, orange);
+                                background-color: yellow;
+                            }
+                
                         }
                     }
 

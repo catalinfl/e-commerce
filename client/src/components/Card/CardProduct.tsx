@@ -34,7 +34,7 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
 
    
 
-    const calculatePercent = (oldPrice: string, price: string): string => {    
+    const calculatePercent: Function = (oldPrice: string, price: string): string => {    
         var oldPriceInt: number = parseInt(oldPrice as string);
         var newPriceInt: number = parseInt(price as string);
         var percent: any;
@@ -107,3 +107,4 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
 }
 
 export default CardProduct
+
