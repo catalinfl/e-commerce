@@ -28,18 +28,27 @@ $navbargreen: hsl(145, 65%, 53%);
         justify-content: center;
         position: relative;
 
+        @media screen and (max-width: 1300px){
+            .navSearchbar, .navIcon { display: none; }
+            .navLogo { display: none; }
+        }
+
 
         .navLogo {
-            width: 150px;
-            height: 70px;
+            max-width: 150px;
+            max-height: 70px;
             margin-left: 20px;
             cursor: pointer;
         }
 
 
+
+
         .navSearchbarContainer {
 
             position: relative;
+
+            
 
             .navSearchbar {
                 width: 700px;

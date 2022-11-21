@@ -3,6 +3,7 @@
     // display: flex;
     flex-direction: row;
     max-width: 1300px;
+    min-width: 500px;
     // height: auto;
     // border: solid 1px #000;
     margin: auto;
@@ -12,6 +13,12 @@
 }
 
 
+@media screen and (max-width: 800px) {
+    .cardsContainer { 
+        justify-content: center;
+    }
+}
+
 .cardsContainer {
     margin-top: 20px;
     display: flex;
@@ -19,6 +26,7 @@
     flex-direction: row;
     flex-flow: row wrap;
     padding-left: 25px;
+    // justify-content: center;
     margin-bottom: 20px;
     // border: solid 1px #000;
 }

@@ -17,6 +17,17 @@ $hover-color: hsl(145, 64%, 43%);
     // border-radius: 10px;
 }
 
+@media screen and (max-width : 1500px) {
+    body {
+        background: #000;
+        border-top: 2px solid #DDDDDD;
+    }
+
+    .categories {
+        display: none;
+    }
+}
+
 
 .categories {
     color: white;
@@ -32,6 +43,7 @@ $hover-color: hsl(145, 64%, 43%);
     .categoriesContainer {
         height: 50px;
         align-items: center;
+        // min-width: 1300px;
         max-width: 1300px;
         display: flex;
         flex: 1;

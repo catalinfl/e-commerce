@@ -39,7 +39,7 @@ const Product: React.FC = () => {
         description?: string,
         specifications?: string,
         reviewStars?: string,
-        reviewComments?: string,
+        reviewComments?: string | any,
         installService?: string,
         ask?: String | String[],
         images?: string | undefined,
@@ -110,8 +110,6 @@ const Product: React.FC = () => {
     return precision;
 }
 
-
-
 const reductionColorCalculator: Function = (precision: string): string | null => {
     var precisionInt = parseInt(precision);
     if (precisionInt === 0) return null;
@@ -137,29 +135,31 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
     const [checkbox2, setCheckbox2] = useState<boolean>(false);
 
 
-    const onChangeCheckbox: Function = (): void => {
-        if (checkboxRef1.current.checked) {
-            console.log("case 1");
-            setCheckbox1(true);
-            setCheckbox2(false);
-        }
-        if (!checkboxRef1.current.checked) {
-            console.log("case 2");
-            setCheckbox1(false);
-        }
-        if (checkbox2 && checkboxRef1.current.checked) {
-            console.log("case 3");
-            setCheckbox2(false);
-            setCheckbox1(true);
-        }
-        if (checkboxRef2.current.checked) {
-            console.log("case 4");
-            setCheckbox1(false);
-            setCheckbox2(true);
-        }
-        if (!checkboxRef2.current.checked) {
-            console.log("case 5");
-            setCheckbox2(false);
+    const onChangeCheckbox: Function = (checkbox: string): void => {
+        switch(checkbox) {
+            case "checkbox1": {
+                if (!checkbox1 && !checkbox2) {
+                    setCheckbox1(true);
+                    return;
+                }
+                if (checkbox1 && !checkbox2) {
+                    setCheckbox1(false);
+                    return;
+                }
+            }
+            case "checkbox2": {
+                if (!checkbox1 && !checkbox2) {
+                    setCheckbox2(true);
+                    return;
+                }
+                if (!checkbox1 && checkbox2) {
+                    setCheckbox2(false);
+                    return;
+                }
+                if (checkbox1 && !checkbox2) {
+                    setCheckbox1(false);
+                }            
+            }
         }
     }
 
@@ -208,7 +208,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                     <BsArrowDown onClick={() => { buttonRef?.current?.scrollTo({top: buttonRef?.current?.scrollTop + 200, behavior: 'smooth'})}} className="productSliderButtonDown" />
                 </div>
                 <div className="productPrincipal">
-                    <img ref={principalRef} className="productPrincipalImage" src={Image} alt="alt" />
+                    <img ref={principalRef} className="productPrincipalImage" src={product.img[0]} alt="alt" />
                 </div>
                 <div className="productOptions">
                     <div className="productPrices">
@@ -253,11 +253,11 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                         <div className="servicesContainer">
                             <div className="serviceName"> Adauga extra garantie </div>
                             <div className="checkboxItem">
-                               <input className="checkboxItemType" ref={checkboxRef1} checked={checkbox1} onChange={() => onChangeCheckbox()} type="checkbox" id="extrawarranty" name="warranty" />
+                               <input className="checkboxItemType" ref={checkboxRef1} checked={checkbox1} onChange={() => onChangeCheckbox("checkbox1")} type="checkbox" id="extrawarranty" name="warranty" />
                                  1 an - 100 lei
                             </div>
                             <div className="checkboxItem">
-                                <input className="checkboxItemType" ref={checkboxRef2} checked={checkbox2} onChange={() => onChangeCheckbox()} id="extrawarranty" type="checkbox" name="warranty" /> 
+                                <input className="checkboxItemType" ref={checkboxRef2} checked={checkbox2} onChange={() => onChangeCheckbox("checkbox2")} id="extrawarranty" type="checkbox" name="warranty" /> 
                                 2 ani - 180 lei
                             </div>
                         </div>
@@ -290,7 +290,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
             </div>
                 {/* <AiOutlineArrowUp className="productArrowUp"/> */}
                 {isProdDescOpen ? 
-                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                <p> {product.description} </p>
                 : null
                 }
         </div>
@@ -305,7 +305,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
             </div>
                 {/* <AiOutlineArrowUp className="productArrowUp"/> */}
                 {isProdSpecOpen ? 
-                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                <p> {product.specifications} </p>
                 : null
                 }
         </div>
@@ -319,9 +319,11 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                 }
             </div>
                 {/* <AiOutlineArrowUp className="productArrowUp"/> */}
-                {isProdReviewOpen ? 
-                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
-                : null
+                { product.reviewComments ? isProdReviewOpen ? 
+                <>
+                {product.reviewComments}
+                </>
+                : null : <p> Nu sunt reviewuri disponibile. </p>
                 }
         </div>
         <div className="productAboutContainer">
@@ -335,7 +337,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
             </div>
                 {/* <AiOutlineArrowUp className="productArrowUp"/> */}
                 {isProdAskOpen ? 
-                <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, dolor? </p>
+                <p> {product.ask} </p>
                 : null
                 }
         </div>
