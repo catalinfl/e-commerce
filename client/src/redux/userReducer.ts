@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialState = {
-    currentUser?: void | null | string,
-    isFetching?: false | boolean,
-    error?: false | boolean
+    currentUser: any,
+    isFetching: any,
+    error: any
 }
 
 const initialState: initialState = {

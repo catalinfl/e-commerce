@@ -28,10 +28,10 @@ $navbargreen: hsl(145, 65%, 53%);
         justify-content: center;
         position: relative;
 
-        @media screen and (max-width: 1300px){
-            .navSearchbar, .navIcon { display: none; }
-            .navLogo { display: none; }
-        }
+        // @media only screen and (max-width: 1300px){
+        //     .navSearchbar, .navIcon { display: none; }
+        //     .navLogo { display: none; }
+        // }
 
 
         .navLogo {
