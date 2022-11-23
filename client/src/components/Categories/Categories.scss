@@ -1,7 +1,8 @@
 $background-color: hsl(127, 81%, 43%);
 $hover-color: hsl(145, 64%, 43%);
 
-// max-width: 1300px
+
+
 
 @mixin button {
     cursor: pointer;
@@ -16,13 +17,6 @@ $hover-color: hsl(145, 64%, 43%);
     padding: 0px 30px;
     // border-radius: 10px;
 }
-
-    .categories {
-        display: none;
-    }
-
-
-
 
 .categories {
     color: white;

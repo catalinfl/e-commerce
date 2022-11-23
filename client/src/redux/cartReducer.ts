@@ -19,13 +19,17 @@ const initialState: initialState = {
     total: 0
 }
 
+type ActionOptions = {
+    price: number,
+    quantity: number,
+} & string
 
 
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addProduct: (state, action: PayloadAction<any>) => {
+        addProduct: (state, action: PayloadAction<ActionOptions>) => {
             state.quantity += 1;
             state.products.push(action.payload);
             state.total += action.payload.price  * action.payload.quantity;

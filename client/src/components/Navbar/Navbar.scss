@@ -1,3 +1,4 @@
+@import "../../responsive/responsive.scss";
 
 @mixin button {
     outline: none;
@@ -11,22 +12,25 @@
 }
 
 
+
 $navbargreen: hsl(145, 65%, 53%);
 
 .navbar {
     background-color: $navbargreen;
     padding-top: 20px;
     padding-bottom: 20px;
+    font-size: 15px;
 
 
     .navbarContainer {
-        display: flex;
+        // display: flex;
         flex-direction: row;
         align-items: center;
         padding: 10px;
         height: 50px;
         justify-content: center;
         position: relative;
+        display: flex;
 
         // @media only screen and (max-width: 1300px){
         //     .navSearchbar, .navIcon { display: none; }
@@ -88,3 +92,8 @@ $navbargreen: hsl(145, 65%, 53%);
     }
 }
 
+@include big {
+    .navbarContainer {
+        display: none;
+    }
+}
