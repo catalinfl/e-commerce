@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dispatch } from "react";
 
 type initialState = {
     currentUser: any,
@@ -13,7 +14,7 @@ const initialState: initialState = {
 } 
 
 export interface PayloadActionForDispatch extends PayloadAction {
-   data: () => {}
+   dispatch?: (p: object) => void;
 }
 
 const userSlice = createSlice({
@@ -23,7 +24,7 @@ const userSlice = createSlice({
         loginStart: (state) => {
             state.isFetching = true;
         },
-        loginSuccess: (state: initialState, action: PayloadAction) => {
+        loginSuccess: (state: initialState, action: any) => {
             state.isFetching = false;
             state.currentUser = action.payload;
         },
