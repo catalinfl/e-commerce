@@ -1,12 +1,5 @@
 @import "../../responsive/responsive.scss";
 
-@include big {
-    body .cardItem .cardDesc { background-color: papayawhip; }
-}
-
-
-
-
 
 
 .cardItem {
@@ -49,7 +42,6 @@
         // border: solid 1px #000;
 
         color: rgb(50, 50, 50);
-        background-color: red;
         font-weight: 500;
     }
 

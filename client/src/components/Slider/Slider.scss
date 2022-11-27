@@ -2,11 +2,20 @@
     color: white;
     font-size: 40px;
     position: absolute;
-    top: 46%;
+    top: 45%;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.6;
     border-radius: 100%;
-    background-color: grey;
+    background-color: green;
+    border: solid 3px grey;
+}
+
+body {
+    ::selection {
+        color: green;
+    }
+
+    overflow-x: hidden;
 }
 
 .slider {
@@ -19,9 +28,12 @@
     justify-content: center;
 
     &:hover {
-        transform:scale(1.03, 1.03);
+        transform:scale(1.01, 1.01);
     }
 
+img::selection {
+    color: transparent;
+}
 
 .sliderContainer {
         margin: auto;
@@ -31,42 +43,48 @@
         height: 350px;
         position: relative;
 
-    
-        
         .sliderLeft {
             @include sliderButton;
             margin-left: 10px;
+            left: 2%;
         }
 
         .sliderRight {
             @include sliderButton;
-            right: 0;
+            right: 2%;
             margin-right: 10px;
         }
 
-        .circlesContainer {
-            border: solid 1px #000;
-            width: 100%;
-            height: 100%;
-            align-items: flex-end;
-            display: flex;
-            justify-content: center;
-
-
-
-            .sliderCircle {
-            position: relative;
-            justify-content: center;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 11px;
-            background-color: green;
-            border: transparent;
-            outline: none;
-            color: green;
+        .sliderImage {
+            width: 1200px;
+            height: 370px;
+            margin: auto;
         }
     }
+    
+    .circlesContainer {
+        // border: solid 1px #000;
+        width: 100%;
+        height: 100%;
+        align-items: flex-end;
+        display: flex;
+        justify-content: center;
 
+
+
+        .sliderCircle {
+        position: relative;
+        justify-content: center;
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 11px;
+        background-color: green;
+        border: transparent;
+        outline: none;
+        color: green;
+        margin-left: 3px;
     }
+
+}
 }
