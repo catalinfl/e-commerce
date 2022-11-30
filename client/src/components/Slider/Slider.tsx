@@ -3,8 +3,8 @@ import { useState, useEffect, useMemo } from 'react'
 import {BsArrowLeftCircle, BsArrowRightCircle} from 'react-icons/bs';
 import { FiCircle } from 'react-icons/fi';
 import { useRef, createRef } from 'react'
-import Image1 from "../../assets/Logo.png"
-import Image2 from "../../assets/CartImage.png"
+import Image1 from '../../assets/BannerImg1.jpg'
+import Image2 from '../../assets/BannerImg2.jpg'
 interface Images {
     image: string,
     id: number,
@@ -32,23 +32,7 @@ const Slider: React.FC = () => {
     ]
 
 
-    // const sliderFunction: Function = (direction: string) => {    
-    //     console.log(direction, imageCount);
-    //     if ((direction === "left") && (imageCount === 0)) {
-    //         return setImageCount(images.length-1);
-    //     }
-    //     if (direction === "left") {
-    //         return setImageCount(imageCount - 1);
-    //     }
-    //     if ((direction === "right") && (imageCount === images.length - 1)) {
-    //         return setImageCount(0);
-    //     }
-    //     if (direction === "right") {
-    //         return setImageCount(imageCount + 1);     
-    //     }
-
-    // }
-
+    
     let slideInterval: any;
     const autoScroll: boolean = true;
 

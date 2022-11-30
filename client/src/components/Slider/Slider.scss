@@ -4,7 +4,7 @@
     position: absolute;
     top: 45%;
     cursor: pointer;
-    opacity: 0.6;
+    opacity: 0.8;
     border-radius: 100%;
     background-color: green;
     border: solid 3px grey;
@@ -46,18 +46,18 @@ img::selection {
         .sliderLeft {
             @include sliderButton;
             margin-left: 10px;
-            left: 2%;
+            left: 4%;
         }
 
         .sliderRight {
             @include sliderButton;
-            right: 2%;
+            right: 4%;
             margin-right: 10px;
         }
 
         .sliderImage {
             width: 1200px;
-            height: 370px;
+            height: 400px;
             margin: auto;
         }
     }

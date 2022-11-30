@@ -106,21 +106,13 @@
 
         .productCode {
             background-color: rgba(grey, 0.3);
-            width: 300px;
+            width: 20%;
             text-align: center;
             color: black;
             font-weight: 700;
             font-size: 14px;
         }
 
-        // .productReviews {
-        //     margin: 10px 0px;
-
-        //     &:hover {
-        //         color:rgb(38, 118, 38);
-        //         cursor: pointer;
-        //     }
-        // }
 
         .productPrincipalContainer {
             display: flex;
@@ -205,6 +197,78 @@
                 flex-direction: column;
                 padding-left: 10px;
                 padding-right: 10px;
+                
+                .productQuantity {
+                    margin-top: 30px;
+                    font-size: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    border: solid 1px green;
+                    padding: 20px;
+                    border-radius: 0px 10px;
+
+                    .productQuantityText {
+                        font-weight: 600;
+                    }
+
+                    .quantityCart {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 5px;
+                    }
+                  
+                    }
+                
+                .quantityWarning {
+                    background-color: rgb(27, 120, 39);
+                    padding: 15px;
+                    text-align: center;
+                    display: flex;
+                    z-index: 2;
+                    justify-content: center;
+                    color: white;
+                    border-radius: 10px 0px;
+                    position: fixed;
+                    left: calc(100vw - 500px);
+                    top: calc(100vh - 200px);
+                    opacity: 0.9;
+
+                    > p {
+                        font-size: 15px;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+
+                    &.onClick {
+                        animation-name: quantityWarning;
+                        animation-duration: 3s;
+                        animation-iteration-count: 1;
+                        animation-timing-function: ease;
+                        animation-fill-mode: fowards;
+                    }
+
+                    @keyframes quantityWarning {
+                        from {
+                            transform: translate(150px)
+                        }
+                        to {
+                            transform: translate(0px);
+                        }
+                    }
+
+
+                    &::after {
+                        content: "x";
+                        position: absolute;
+                        right: 5px;
+                        top: -2px;
+                        cursor: pointer;
+                    }
+                }
+
 
                 .productPrices {
 
@@ -262,13 +326,14 @@
                         font-weight: 700;
                     }
 
+
                     .productGreenTax {
                         color:rgb(38, 118, 38);
                         font-size: 13px;
                     }
 
                     .productStock {
-                        color: green;
+                        color: rgb(3, 125, 3);
                     }
                 }
 
@@ -414,16 +479,13 @@
 
             .productDescription {
                 @include Specifications;
+
             }
 
             .productSpecifications {
                 @include Specifications;
-                &.content {
-                    display: flex;
-                    flex-direction: column;
-                    height: 500px;
-                }
             }
+
 
             .productReviews {
                 @include Specifications;

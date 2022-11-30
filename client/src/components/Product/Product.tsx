@@ -10,9 +10,8 @@ import { IconType } from 'react-icons'
 import { useState, useEffect } from "react"
 import { publicRequest } from '../../requestMethods'
 import { useLocation } from 'react-router-dom'
-
-
-
+import { FiMinusCircle, FiPlusCircle } from "react-icons/fi"
+import { MdWarning } from "react-icons/md"
 
 const Product: React.FC = () => {
 
@@ -34,7 +33,7 @@ const Product: React.FC = () => {
   
     interface productProps {
         name?: string;
-        price?: string;
+        price: string;
         warranty?: string,
         description?: string,
         specifications?: string,
@@ -48,19 +47,21 @@ const Product: React.FC = () => {
         productCode?: string,
         inStock?: string,
         img: Array<string>,
-        oldPrice?: string
+        oldPrice: string
     }
 
       
   const location = useLocation();
   const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState<productProps>({img: []});
+  const [product, setProduct] = useState<productProps>({img: [], price: "0", oldPrice: "0"});
   
   
   const [isProdDescOpen, setIsProdDescOpen] = useState<boolean>(true);
   const [isProdSpecOpen, setIsProdSpecOpen] = useState<boolean>(false);
   const [isProdReviewOpen, setIsProdReviewOpen] = useState<boolean>(false);
   const [isProdAskOpen, setIsProdAskOpen] = useState<boolean>(false);
+  const [warning, setWarning] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState<number>(1);
   
 
   const openTabFunction: Function = (path: string) => {
@@ -106,7 +107,6 @@ const Product: React.FC = () => {
         }
         
         else precision = percentString;
-    
     return precision;
 }
 
@@ -135,6 +135,29 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
     const [checkbox2, setCheckbox2] = useState<boolean>(false);
 
 
+    var priceConverted: string;
+    var priceInNumber: number;
+
+    const checkNumber = (price: string): string => {
+        priceInNumber = parseInt(price);
+        if (priceInNumber >= 1000) {
+            var step: number = 0;
+            if (priceInNumber / 1000 < 10) {
+                step = 1;
+            } 
+            if (priceInNumber / 1000 > 10) {
+                step = 2;
+            } 
+            if (priceInNumber / 1000 > 100) {
+                step = 3;
+            }     
+            priceConverted = price.slice(0, step) + "." + price.slice(step, price.length); 
+        }
+        else priceConverted = price;
+        return priceConverted;
+    }
+    checkNumber("1050,71");
+
     const onChangeCheckbox: Function = (checkbox: string): void => {
         switch(checkbox) {
             case "checkbox1": {
@@ -146,6 +169,11 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                     setCheckbox1(false);
                     return;
                 }
+                if (!checkbox1 && checkbox2) {
+                    setCheckbox2(false);
+                    setCheckbox1(true);
+                }            
+
             }
             case "checkbox2": {
                 if (!checkbox1 && !checkbox2) {
@@ -158,6 +186,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                 }
                 if (checkbox1 && !checkbox2) {
                     setCheckbox1(false);
+                    setCheckbox2(true);
                 }            
             }
         }
@@ -167,19 +196,29 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
     precision = calculatePercent(product.oldPrice, product.price);
 
     reductionColor = reductionColorCalculator(precision);
-    // const sliderButton: Function = (direction: string) => {
-    //     if (direction === "up") {
-    //         buttonRef?.current?.scrollTo(0, 0);
-    //     }
-    //     if (direction === "down") {
 
-    //     }
-    // }
+    const checkboxRef1 = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;    
+    const checkboxRef2 = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
+    const quantityRef = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
+    const warningRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
-    const checkboxRef1 = useRef<any>();    
-    const checkboxRef2 = useRef<any>();
-   
-    const refe = React.useRef<any>();
+    const countQuantity = (direction: string) => {
+        if (quantity === 1 && direction === "minus") {
+            return setQuantity(1);
+        }
+        if (direction === "minus") {
+            setQuantity(quantity - 1);
+        }
+        if (direction === "plus") {
+            setQuantity(quantity + 1);
+        }
+        if ((direction === "plus") && (quantity === 10)) {
+            setWarning(true);
+            setQuantity(10);
+        }
+    }
+
+
 
     return (
     <div className="product">
@@ -213,11 +252,13 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                 <div className="productOptions">
                     <div className="productPrices">
                         <div className="oldPriceContainer">
-                            { (comparePrices(product.price, product.oldPrice)) ? <div className="productOldPrice"> {product.oldPrice} lei </div> : null  }
-                            {(comparePrices(product.price, product.oldPrice)) ? <div className={`productReduced ${reductionColor}`}> {precision}% </div> : null}
+                            { (comparePrices(product.price, product.oldPrice)) && <div className="productOldPrice"> 
+                            {checkNumber((parseInt(product.oldPrice) * quantity).toString())} lei
+                             </div>  }
+                            {(comparePrices(product.price, product.oldPrice)) && <div className={`productReduced ${reductionColor}`}> {precision}% </div>}
                         </div>
                         <div className="productNewPrice">
-                        {product.price} lei
+                            {checkNumber((parseInt(product.price) * quantity).toString())} lei
                         </div>
                         <div className="productGreenTax"> Include taxa verde </div>
                             {product.inStock === "yes" ? 
@@ -229,6 +270,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                     <div className="productWarranty">
                         <AiOutlineInfoCircle /> Acest produs include garantie {product.warranty}
                     </div>
+                    
                     <div className="productBuyButtonContainer">
                        <button className="productBuyButton">  Adaugă în coș </button> 
                     </div>
@@ -244,8 +286,20 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                         </div>
                         </>
                         } 
-                        
                     </div>
+                    <div className="productQuantity">
+                        <p className="productQuantityText"> Cantitatea dorită </p>
+                        <div className="quantityCart">
+                            <FiMinusCircle style={{cursor: 'pointer'}} onClick={() => countQuantity("minus")}/>
+                            <h5> {quantity} </h5>
+                            <FiPlusCircle style={{cursor: 'pointer'}} onClick={() => countQuantity("plus")}/>
+                        </div>
+                    </div>
+                    {warning &&
+                    <div ref={warningRef} onClick={() => setWarning(false)} className={`quantityWarning ${warning && "onClick"}`}> 
+                    <p> Canitatea maxima admisa este 10 <MdWarning style={{color: 'red', fontSize: '25px', marginLeft: '10px'}}/>  </p>
+                    </div>
+                    }
                     <div className="productServices">
                         <h2 className="servicesTitle">
                             Servicii
