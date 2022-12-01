@@ -10,14 +10,6 @@
     border: solid 3px grey;
 }
 
-body {
-    ::selection {
-        color: green;
-    }
-
-    overflow-x: hidden;
-}
-
 .slider {
     margin-top: 10px;
     transition-duration: 1s;
@@ -32,7 +24,8 @@ body {
     }
 
 img::selection {
-    color: transparent;
+    color: inherit;
+    background-color: transparent;
 }
 
 .sliderContainer {

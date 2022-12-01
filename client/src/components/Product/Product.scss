@@ -1,3 +1,6 @@
+@import '../../responsive/responsive.scss';
+
+
 @mixin SliderButton {
     border: none;    // top: 10px;
     width: 100px;
@@ -55,6 +58,7 @@
     cursor: pointer;
     height: auto;
     
+    @include noSelect;
     @include descriptions;
     @include hoverAnimation;
 
@@ -90,6 +94,7 @@
         width: 1300px;
         max-width: 1300px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @include noSelect;
 
         .productCategory {
             font-size: 14px;

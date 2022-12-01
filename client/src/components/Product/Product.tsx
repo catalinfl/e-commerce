@@ -12,8 +12,30 @@ import { publicRequest } from '../../requestMethods'
 import { useLocation } from 'react-router-dom'
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi"
 import { MdWarning } from "react-icons/md"
+import { Checkbox } from 'pretty-checkbox-react'
+import '@djthoms/pretty-checkbox';
 
-const Product: React.FC = () => {
+export type ProductProps = {
+    name?: string;
+    price: string;
+    warranty?: string,
+    description?: string,
+    specifications?: string,
+    reviewStars?: string,
+    reviewComments?: string | any,
+    installService?: string,
+    ask?: String | String[],
+    images?: string | undefined,
+    categories?: string,
+    subcategory?: string,
+    productCode?: string,
+    inStock?: string,
+    img: Array<string>,
+    oldPrice: string
+}
+
+
+const Product = (props: ProductProps) => {
 
     const principalRef = React.useRef<HTMLImageElement>(null);
     const photoRef = React.useRef<HTMLImageElement>(null);
@@ -31,29 +53,11 @@ const Product: React.FC = () => {
         }
     }
   
-    interface productProps {
-        name?: string;
-        price: string;
-        warranty?: string,
-        description?: string,
-        specifications?: string,
-        reviewStars?: string,
-        reviewComments?: string | any,
-        installService?: string,
-        ask?: String | String[],
-        images?: string | undefined,
-        categories?: string,
-        subcategory?: string,
-        productCode?: string,
-        inStock?: string,
-        img: Array<string>,
-        oldPrice: string
-    }
-
-      
+   
+   
   const location = useLocation();
   const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState<productProps>({img: [], price: "0", oldPrice: "0"});
+  const [product, setProduct] = useState<ProductProps>({img: [], price: "0", oldPrice: "0"});
   
   
   const [isProdDescOpen, setIsProdDescOpen] = useState<boolean>(true);
@@ -156,7 +160,6 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
         else priceConverted = price;
         return priceConverted;
     }
-    checkNumber("1050,71");
 
     const onChangeCheckbox: Function = (checkbox: string): void => {
         switch(checkbox) {
@@ -199,7 +202,6 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
 
     const checkboxRef1 = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;    
     const checkboxRef2 = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
-    const quantityRef = useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
     const warningRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
     const countQuantity = (direction: string) => {
@@ -307,11 +309,11 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                         <div className="servicesContainer">
                             <div className="serviceName"> Adauga extra garantie </div>
                             <div className="checkboxItem">
-                               <input className="checkboxItemType" ref={checkboxRef1} checked={checkbox1} onChange={() => onChangeCheckbox("checkbox1")} type="checkbox" id="extrawarranty" name="warranty" />
+                                <Checkbox className="checkboxItemType" color="success"ref={checkboxRef1} checked={checkbox1} onChange={() => onChangeCheckbox("checkbox1")} id="extrawarranty" name="warranty" />
                                  1 an - 100 lei
                             </div>
                             <div className="checkboxItem">
-                                <input className="checkboxItemType" ref={checkboxRef2} checked={checkbox2} onChange={() => onChangeCheckbox("checkbox2")} id="extrawarranty" type="checkbox" name="warranty" /> 
+                                <Checkbox className="checkboxItemType" color="success" ref={checkboxRef2} checked={checkbox2} onChange={() => onChangeCheckbox("checkbox2")} id="extrawarranty" name="warranty" /> 
                                 2 ani - 180 lei
                             </div>
                         </div>

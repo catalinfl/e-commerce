@@ -5,6 +5,24 @@ $mediumtobig: 1280px;
 $big: 1600px;
 $fhd: 1920px;
 
+
+@mixin noSelect {
+    ::selection {
+    color: inherit;
+    background-color: transparent;
+    }
+}
+
+
+body {
+    ::selection {
+        color: white;
+        background-color: green;
+    }
+
+    overflow-x: hidden;
+}
+
 @mixin small {
     @media (max-width: #{$small}) {
         @content;
