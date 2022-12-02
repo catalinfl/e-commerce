@@ -71,11 +71,12 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
 
     precision = calculatePercent(oldPrice as string, price);
     reductionColor = reductionColorCalculator(precision);
+    console.log(oldPrice)
 
   return (
     <div className="cardItem">
         <div className="cardImg">
-            <img className="cartImage" src={Image} alt="image" />
+            <img className="cartImage" src={image} alt="image" />
         </div>
         <div className="cardDesc">
             {title}
@@ -87,14 +88,13 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
             <Ratings stars={ratingToPass} reviews={reviewsToPass}/>
         </div> : null}
         <div className="cardOldPriceContainer">
-        { (precision!=="") ? 
+        {oldPrice && (precision!=="") ?
         <div className="cardOldPrice">
             {oldPrice} lei
-        </div>
-        : null
+        </div> : null
         }
-        {oldPrice ? 
-            (precision!=="") ? <div className={`cardReduce ${reductionColor}`}> <p> {precision}% </p> </div> : null : null} 
+        {oldPrice && 
+            (precision!=="") && <div className={`cardReduce ${reductionColor}`}> <p> {precision}% </p> </div> } 
         </div>
         <div className="cardPrice">
         {price} lei

@@ -17,10 +17,6 @@ import { useState } from "react"
 import { ProductProps } from './components/Product/Product'
 
 
-// const [products, setProducts] = useState<any>();
-
-
-
 
 
 

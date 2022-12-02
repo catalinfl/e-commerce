@@ -38,12 +38,10 @@ const Slider: React.FC = () => {
 
   
     const nextSlide = () => {
-        console.log(imageCount);
         setImageCount(imageCount === images.length - 1 ? 0 : imageCount + 1);
     }
 
     const prevSlide = () => {
-        console.log(imageCount);
         setImageCount(imageCount === 0 ? images.length - 1 : imageCount - 1);
     }
 

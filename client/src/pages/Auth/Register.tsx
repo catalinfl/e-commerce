@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import "./register.scss"
 
 
-const Register: React.FC = () => {
+const Register: React.FC = (): ReactElement => {
     return (
       <div className="register"> 
           <div className="registerContainer">
