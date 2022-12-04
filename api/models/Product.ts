@@ -8,14 +8,15 @@ interface Product {
     description: string,
     specifications: string,
     reviewStars: string,
-    reviewComments: String | Array<string>,
-    ask: String | String[],
+    reviewComments: string | string[],
+    ask: string | string[]
     categories: string,
-    img: Array<String>,
+    img: string[],
     subcategory?: string,
     oldPrice?: string,
     productCode: string,
-    inStock: string
+    inStock: string,
+    top: boolean
 }
 
 const ProductSchema = new mongoose.Schema<Product>(
@@ -34,7 +35,8 @@ const ProductSchema = new mongoose.Schema<Product>(
         subcategory: { type: String },
         img: [{ type: String, required: true}],
         productCode: { type: String, unique: true, required: true},
-        inStock: {type: String, required: true}
+        inStock: {type: String, required: true},
+        top: { type: Boolean }
     },
     {timestamps: true}
     )

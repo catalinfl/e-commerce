@@ -15,13 +15,17 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
   const [useStars, setUseStars] = useState<number>(stars);
   const [useReviews, setUseReviews] = useState<number | (() => number) | undefined>(reviews);
   
+  if (reviews === 0) {
+    stars = 0;
+  }
   
 
   return (
     <>
     <div className="cardRating">
     <div className="cardStars">
-    { (stars == 5.00) ?       
+    { 
+    (stars == 5.00) ?       
       <>
       <IoMdStar />
       <IoMdStar />

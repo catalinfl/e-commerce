@@ -30,9 +30,10 @@ export type ProductProps = {
     subcategory?: string,
     productCode?: string,
     inStock?: string,
-    _id?: string,
+    _id?: string
     img: Array<string>,
-    oldPrice: string
+    oldPrice: string,
+    top?: boolean
 }
 
 

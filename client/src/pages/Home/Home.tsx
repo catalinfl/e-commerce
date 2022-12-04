@@ -8,7 +8,7 @@ import { publicRequest } from '../../requestMethods'
 import { ProductProps } from '../../components/Product/Product'
 
 const Home: React.FC = () => {
-    const [products, setProducts] = useState<ProductProps[]>()
+    const [products, setProducts] = useState<ProductProps[] & any>()
 
 
     useEffect(() => {
@@ -24,7 +24,9 @@ const Home: React.FC = () => {
         getProducts();
     }, [])
 
-    console.log(products)
+    const array = [1, 5, 4, 3];
+ 
+
     return (
     <>
     <Navbar />
