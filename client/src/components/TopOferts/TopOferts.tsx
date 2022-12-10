@@ -22,7 +22,6 @@ const TopOferts = ({products}: TopOfertsProps) => {
     const navigate: NavigateFunction = useNavigate();
     
     const navigateFunc = (link: string) => {
-        console.log("ajunge aici")
         navigate(`/${link}`);
     }
 

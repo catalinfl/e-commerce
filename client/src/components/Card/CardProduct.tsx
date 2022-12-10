@@ -71,7 +71,6 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
 
     precision = calculatePercent(oldPrice as string, price);
     reductionColor = reductionColorCalculator(precision);
-    console.log(oldPrice)
 
   return (
     <div className="cardItem">

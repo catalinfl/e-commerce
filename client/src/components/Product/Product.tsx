@@ -14,6 +14,8 @@ import { FiMinusCircle, FiPlusCircle } from "react-icons/fi"
 import { MdWarning } from "react-icons/md"
 import { Checkbox } from 'pretty-checkbox-react'
 import '@djthoms/pretty-checkbox';
+import { useDispatch } from 'react-redux'
+import { addProduct } from '../../redux/cartReducer'
 
 export type ProductProps = {
     name?: string;
@@ -37,12 +39,14 @@ export type ProductProps = {
 }
 
 
-const Product = (props: ProductProps) => {
+const Product = (props: any) => {
 
     const principalRef = React.useRef<HTMLImageElement>(null);
     const photoRef = React.useRef<HTMLImageElement>(null);
     const buttonRef = React.useRef<HTMLDivElement>(null);
     const [isClicked, setIsClicked] = React.useState<boolean>(false);
+
+    const dispatch = useDispatch()
     // const favoriteRef = React.forwardRef<HTMLButtonElement>(null);
 
 
@@ -59,7 +63,7 @@ const Product = (props: ProductProps) => {
    
   const location = useLocation();
   const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState<ProductProps>({img: [], price: "0", oldPrice: "0"});
+  const [product, setProduct] = useState<any>({img: [], price: "0", oldPrice: "0"});
   
   
   const [isProdDescOpen, setIsProdDescOpen] = useState<boolean>(true);
@@ -222,7 +226,9 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
         }
     }
 
-
+    const handleClick = () => {
+        dispatch(addProduct({...product, quantity, price: product.price * quantity}))
+    }
 
     return (
     <div className="product">
@@ -276,7 +282,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                     </div>
                     
                     <div className="productBuyButtonContainer">
-                       <button className="productBuyButton">  Adaugă în coș </button> 
+                       <button onClick={handleClick}className="productBuyButton">  Adaugă în coș </button> 
                     </div>
                     <div className="productFavorite" onClick={() => setIsClicked(!isClicked)}>
                         { !isClicked ? 

@@ -86,6 +86,13 @@ $navbargreen: hsl(145, 65%, 53%);
             margin-left: 200px;
             position: relative;
 
+            .circleQuantity {
+            border-radius: sphere;
+            color: white;
+            padding: 0px 5px;
+            border-radius: 50%;
+            background-color: rgb(7, 159, 37);
+            }
         }
 
 

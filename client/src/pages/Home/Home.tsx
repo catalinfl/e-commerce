@@ -24,8 +24,6 @@ const Home: React.FC = () => {
         getProducts();
     }, [])
 
-    const array = [1, 5, 4, 3];
- 
 
     return (
     <>
