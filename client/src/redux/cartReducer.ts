@@ -1,15 +1,39 @@
 import { createSlice, PayloadAction, StateFromReducersMapObject } from "@reduxjs/toolkit"
 
-interface cartPayload {
-    price: number,
-    products: Array<string>,
+
+type initialState = {
+    products: string[],
+    quantity: number,
+    total: number
+}
+
+
+
+
+
+type cartState = {
+    quantity: number;
+    products: string[]
+    total: number
+}
+
+
+
+type Action = {
+    type: string,
+    payload: ActionPayload & string
+}
+
+
+type ActionPayload = {
+    price: number
+    _id: string
     quantity: number,
 }
 
-type initialState = {
-    products: Array<string>,
-    quantity: number,
-    total: number
+type ActionOptional = {
+    type?: string,
+    payload?: ActionPayload,
 }
 
 
@@ -19,23 +43,26 @@ const initialState: initialState = {
     total: 0
 }
 
-type ActionOptions = {
-    price: number,
-    quantity: number,
-} & string
-
 
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addProduct: (state, action) => {
+        addProduct: (state: cartState, action: Action) => {
+            if (state.products.every((product: any) => product._id !== action.payload._id)) {
             state.quantity += action.payload.quantity;
-            state.products.push(action.payload);
-            state.total += action.payload.price  * action.payload.quantity;
+            state.products.push(action.payload)
+            }
+            else state.quantity += action.payload.quantity
+            state.total += action.payload.price;
+        },
+        reset: (state: cartState, action: ActionOptional) => {
+            state.quantity = 0;
+            state.products = [];
+            state.total = 0;
         }
     }
 })
 
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, reset } = cartSlice.actions;
 export default cartSlice.reducer;

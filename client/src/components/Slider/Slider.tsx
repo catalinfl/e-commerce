@@ -53,15 +53,22 @@ const Slider: React.FC = () => {
         setImageCount(0);
     }, [])
 
-
     function imageIntervalSlider() {
-        slideInterval = setInterval(() => nextSlide(), 10000);
+        slideInterval = setInterval(() => nextSlide(), 10000)
     }
+
 
     useEffect(() => {
         imageIntervalSlider();
         return () => clearInterval(slideInterval);
     }, [imageCount])
+
+
+    // useEffect(() => {
+    //     imageIntervalSlider();
+    //     return () => clearInterval(slideInterval);
+    // }, [imageCount])
+
 
 
     return (
