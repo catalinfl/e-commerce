@@ -13,6 +13,8 @@ const initialState: initialState = {
     error: false
 } 
 
+// 
+
 export interface PayloadActionForDispatch extends PayloadAction {
    dispatch?: (p: object) => void;
 }
@@ -24,7 +26,7 @@ const userSlice = createSlice({
         loginStart: (state) => {
             state.isFetching = true;
         },
-        loginSuccess: (state: initialState, action: any) => {
+        loginSuccess: (state: typeof initialState, action: any) => {
             state.isFetching = false;
             state.currentUser = action.payload;
         },

@@ -20,8 +20,11 @@ $hover-color: hsl(145, 64%, 43%);
     background-color: white;
     position: absolute;
     z-index: 3;
+    width: auto;
     top: 50px;
     right: 125px;
+    border-radius: 0px 10px;
+    box-shadow: 4px 4px 10px 1px black;
 
     .cartContainer {
         display: flex;
@@ -29,12 +32,27 @@ $hover-color: hsl(145, 64%, 43%);
         width: 300px;
         height: auto;
         padding: 15px;
+
         color: grey;
         position: relative;
     }
 
     .cartContainerTriangle {
         @include triangle;
+    }
+
+
+    .cartClearButton {
+        border: none;
+        background-color: red;
+        padding: 10px;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        outline: none;
+        margin: auto;
+        display: flex;
     }
 
 }

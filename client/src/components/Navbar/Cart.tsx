@@ -14,8 +14,12 @@ const Cart = () => {
     <div className="cart">
         <div className="cartContainer">
           <div className="cartContainerTriangle"> </div>
-          <button onClick={() => dispatch(reset())}> test </button>
+          <div className="cartHeader"> 
             {cartProducts.quantity}
+          </div>
+          <div className="cardBody">
+          <button className="cartClearButton" onClick={() => dispatch(reset())}> Clear the cart </button>
+          </div>
         </div>
     </div>
   )

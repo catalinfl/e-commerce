@@ -1,29 +1,19 @@
 import { createSlice, PayloadAction, StateFromReducersMapObject } from "@reduxjs/toolkit"
 
 
+
+
+
 type initialState = {
-    products: string[],
+    products: [] | string[]
     quantity: number,
     total: number
 }
 
-
-
-
-
-type cartState = {
-    quantity: number;
-    products: string[]
-    total: number
-}
-
-
-
 type Action = {
-    type: string,
-    payload: ActionPayload & string
+    type: string
+    payload: ActionPayload
 }
-
 
 type ActionPayload = {
     price: number
@@ -48,15 +38,15 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addProduct: (state: cartState, action: Action) => {
+        addProduct: (state: initialState | any, action: Action) => {
             if (state.products.every((product: any) => product._id !== action.payload._id)) {
             state.quantity += action.payload.quantity;
-            state.products.push(action.payload)
+            state.products?.push(action.payload)
             }
             else state.quantity += action.payload.quantity
             state.total += action.payload.price;
         },
-        reset: (state: cartState, action: ActionOptional) => {
+        reset: (state: initialState, action: ActionOptional) => {
             state.quantity = 0;
             state.products = [];
             state.total = 0;
