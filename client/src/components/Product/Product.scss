@@ -77,18 +77,20 @@
     }
 }
 
-
-
 @mixin titleFont {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 
 .product {
     display: flex;
     justify-content: center;
 
+    @include big {
+        
+    }
+
     .productContainer {
- 
         display: flex;
         flex-direction: column;
         width: 1300px;
@@ -252,7 +254,7 @@
                         animation-duration: 3s;
                         animation-iteration-count: 1;
                         animation-timing-function: ease;
-                        animation-fill-mode: fowards;
+                        animation-fill-mode: forwards;
                     }
 
                     @keyframes quantityWarning {
@@ -508,8 +510,6 @@
             .productSimilarContainer {
                 @include Container;
             }
-
-           
 }
 
 

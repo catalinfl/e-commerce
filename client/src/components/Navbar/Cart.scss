@@ -24,7 +24,7 @@ $hover-color: hsl(145, 64%, 43%);
     top: 50px;
     right: 125px;
     border-radius: 0px 10px;
-    box-shadow: 4px 4px 10px 1px black;
+    box-shadow: 2px 2px 20px rgb(14, 134, 62);
 
     .cartContainer {
         display: flex;
@@ -32,7 +32,6 @@ $hover-color: hsl(145, 64%, 43%);
         width: 300px;
         height: auto;
         padding: 15px;
-
         color: grey;
         position: relative;
     }

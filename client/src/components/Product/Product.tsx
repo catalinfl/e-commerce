@@ -182,7 +182,6 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
                     setCheckbox2(false);
                     setCheckbox1(true);
                 }            
-
             }
             case "checkbox2": {
                 if (!checkbox1 && !checkbox2) {
@@ -409,16 +408,10 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
             {/*  recommendations and similars */}
                 <p className="productRecommended"> Produse recomandate </p>
                 <div className="productRecommendContainer">
-                <CardProduct price={"150"} oldPrice={"250"} title={"Salut"} image={"test"} rating={"3.3"} reviews={"3"}/>
-                <CardProduct price={"120"} oldPrice={"125"} title={"mihai"} image={"img2"} rating={"3.5"} reviews={"5"}/>
-                <CardProduct price={"350"} oldPrice={"450"} title={"lol"} image={"img3"} rating={"3.8"} reviews={"15"}/>
-                <CardProduct price={"250"} oldPrice={"25000"} title={"mircea"} image={"img4"} rating={"5"} reviews={"20"}/>
+                { /* aici merg card producturile */}
                 </div>
                 <div className="productRecommendContainer">
-                {/* <CardProduct />
-                <CardProduct />
-                <CardProduct />
-                <CardProduct /> */}
+                { /* alta zona de card producturi */ }
                 </div>
             </div>
             <div className="productSimilar">
