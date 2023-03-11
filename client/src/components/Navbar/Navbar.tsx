@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Cart from './Cart'
 import Image from '../../assets/Logo.png'
 import { useSelector } from 'react-redux'
-
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 const Navbar: React.FC = () => {
     const [openCart, setOpenCart] = useState<boolean>(false);
@@ -29,6 +29,7 @@ const Navbar: React.FC = () => {
             {openCart && <Cart />}
             <button className="navButtonAccount"> <VscAccount/> Login </button>
             </div>
+            <GiHamburgerMenu className="navHamburger"/>
         </div>
     </div>
     )

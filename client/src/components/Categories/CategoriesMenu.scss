@@ -11,7 +11,6 @@ $hover-color: hsl(145, 64%, 43%);
     height: 0px;
     position: absolute;
     top: 30px;
-    left: calc(15em);
 }
 
 
@@ -26,8 +25,12 @@ $hover-color: hsl(145, 64%, 43%);
     }
 
 
+.categoriesParent {
+
+
 .categoriesTriangle {
     @include triangle;
+    background-color: red;
 }
 
 
@@ -36,8 +39,6 @@ $hover-color: hsl(145, 64%, 43%);
     background-color: white;
     position: absolute;
     border-radius: 0px 10px 0px 10px;
-    top: 50px;
-    left: 185px;
     z-index: 2;
 
 
@@ -66,5 +67,5 @@ $hover-color: hsl(145, 64%, 43%);
             }
         }
     }
-
+}
 }

@@ -1,13 +1,5 @@
 @import "../../responsive/responsive.scss";
 
-@mixin all {
-    @include big;
-    @include medium;
-    @include fhd;
-    @include mediumtobig;
-    @include smalltomedium;
-}
-
 
 @mixin button {
     outline: none;
@@ -41,8 +33,7 @@ $navbargreen: hsl(145, 65%, 53%);
 
     @media screen and (max-width: 968px) {
         .navbarContainer {
-            justify-content: center !important;
-            width: auto;
+            justify-content: space-between !important;
         }
     }
 
@@ -78,11 +69,21 @@ $navbargreen: hsl(145, 65%, 53%);
             .navButtons {
                 display: none;
             }
+
+
+            .navHamburger {
+                display: flex !important;
+            }
         }
 
-        @media screen and (max-width: 720px) {
+        @media screen and (max-width: 968px) {
             .navSearchbar {
                 width: 65vw !important;
+                margin-left: -5vw;
+            }
+
+            .navHamburger {
+                font-size: 35px !important;
             }
         }
 
@@ -111,11 +112,23 @@ $navbargreen: hsl(145, 65%, 53%);
 
     }
 
+
+    .navHamburger {
+        color: white;
+        display: none;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        font-size: 4vw;
+    }
+
     .navButtons {
+
 
         .navButtonAccount {
             @include button;
         }
+
 
         .navButtonCart {
             @include button;

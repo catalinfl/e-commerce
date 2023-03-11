@@ -8,7 +8,9 @@ const CategoriesMenu: React.FC = () => {
 
     return (
         <> 
-        <div className="categoriesTriangle"></div>
+        <div className="categoriesParent"> 
+        <div className="categoriesTriangle">
+        </div>
         <div className="categoriesMenu">
         <div className="categoriesMenuContainer">
             <p className="categoriesItems"> Camnsdnsder <AiOutlineArrowRight className="categoriesIcon" /></p>
@@ -18,6 +20,7 @@ const CategoriesMenu: React.FC = () => {
             <p className="categoriesItems"> wetwtawetatolor <AiOutlineArrowRight className="categoriesIcon" /> </p>
         </div>
     </div>
+</div>
     </>
         )
 }
