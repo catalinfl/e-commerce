@@ -24,37 +24,37 @@ body {
 }
 
 @mixin small {
-    @media (max-width: #{$smalltomedium - 1px}){
+    @media screen and (max-width: #{$smalltomedium - 1px}){
         @content;
     }
 }
 
 @mixin smalltomedium {
-    @media (min-width: #{$smalltomedium}) and (max-width: #{$medium - 1px}) {
+    @media screen and (min-width: #{$smalltomedium}) and (max-width: #{$medium - 1px}) {
         @content;
     }
 }
 
 @mixin medium {
-    @media (min-width: #{$medium}) and (max-width: #{$mediumtobig - 1px}) {
+    @media screen and (min-width: #{$medium}) and (max-width: #{$mediumtobig - 1px}) {
         @content;
     }
 }
 
 @mixin mediumtobig {
-    @media (min-width: #{$mediumtobig}) and (max-width: #{$big - 1px}) {
+    @media screen and (min-width: #{$mediumtobig}) and (max-width: #{$big - 1px}) {
         @content;
     }
 }
 
 @mixin big {
-    @media (min-width: #{$big}) and (max-width: #{$fhd - 1px}) {
+    @media screen and (min-width: #{$big}) and (max-width: #{$fhd - 1px}) {
         @content;
     }
 }
 
 @mixin fhd {
-    @media (min-width: #{$fhd}) {
+    @media screen and (min-width: #{$fhd}) {
         @content;
     }
 }

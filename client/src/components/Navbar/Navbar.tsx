@@ -24,9 +24,11 @@ const Navbar: React.FC = () => {
             <input className="navSearchbar" type="text"/> 
             <AiOutlineSearch className="navIcon"/>
             </div>
+            <div className="navButtons"> 
             <button className="navButtonCart" onClick={() => setOpenCart(!openCart)}> <BsCart2 /> Cart <span className="circleQuantity">  {quantity} </span> </button>
             {openCart && <Cart />}
             <button className="navButtonAccount"> <VscAccount/> Login </button>
+            </div>
         </div>
     </div>
     )

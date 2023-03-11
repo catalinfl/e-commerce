@@ -11,8 +11,6 @@ type TopOfertsProps = {
     products: ProductProps[]
 } 
 
-
-
 const TopOferts = ({products}: TopOfertsProps) => {
 
     const [topProducts, setTopProducts] = useState<any>();
