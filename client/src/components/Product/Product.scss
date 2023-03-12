@@ -85,11 +85,8 @@
 .product {
     display: flex;
     justify-content: center;
-
-    @include big {
-        
-    }
-
+    
+    
     .productContainer {
         display: flex;
         flex-direction: column;

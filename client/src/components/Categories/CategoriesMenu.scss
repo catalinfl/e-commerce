@@ -1,3 +1,4 @@
+@import '../../responsive/responsive.scss';
 $hover-color: hsl(145, 64%, 43%);
 
 
@@ -6,40 +7,85 @@ $hover-color: hsl(145, 64%, 43%);
     border-top: solid transparent 10px;
     border-left: solid transparent 10px;
     border-right: solid transparent 10px;
-    border-bottom: solid rgb(255, 255, 255) 10px;
+    border-bottom: solid #fff 10px;
     width: 0px;
     height: 0px;
-    position: absolute;
+    // position: absolute;
     top: 30px;
+
 }
 
 
-// @media screen and (min-width: 1600px) {
-//     .categoriesTriangle {
-//         left: calc(50em);
-//         color: red;
-//     }
 
-    .categoriesMenu {
-        display: none;
+
+@include big {
+
+    .categoriesTriangle {
+        margin-left: 2vw;
     }
+}
+
+@include mediumtobig {
+    .categoriesMenu {
+        margin-left: 2vw;
+    }
+
+    .categoriesTriangle {
+        margin-left: 10vw !important;
+    }
+}
+
+@include medium {
+    .categoriesMenu {
+        margin-left: 3vw;
+    }
+
+    .categoriesTriangle {
+        margin-left: 10vw !important;
+    }
+}
+
+
+@include smalltomedium {
+    
+    .categoriesMenu {
+        margin-left: 3vw;
+    }
+
+    .categoriesTriangle {
+        margin-left: 10vw !important;
+    }
+}
+
+@include small {
+    .categoriesMenu {
+        margin-left: 3vw;
+    }
+
+    .categoriesTriangle {
+        margin-left: 8vw !important;
+    }
+
+}
 
 
 .categoriesParent {
-
+    position: absolute;
+    z-index: 3;
+    left: -3vw;
 
 .categoriesTriangle {
     @include triangle;
-    background-color: red;
+    margin: auto;
 }
 
 
 .categoriesMenu {
     display: flex;
     background-color: white;
-    position: absolute;
+    // position: absolute;
     border-radius: 0px 10px 0px 10px;
-    z-index: 2;
+    border: solid 3px white;
 
 
     .categoriesMenuContainer {
@@ -49,6 +95,7 @@ $hover-color: hsl(145, 64%, 43%);
         height: auto;
         padding: 15px;
         color: grey;
+        box-shadow: 2px 3px 10px green;
 
         .categoriesItems {
             display: flex;
