@@ -81,10 +81,72 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+@mixin smallTitles {
+
+    .product {
+        flex-wrap: wrap !important;
+    }
+
+    .productTitle {
+        font-size: 5vw !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .productCode {
+        width: auto !important;
+        font-size: 13px !important;
+    }
+
+    .productRating {
+        font-size: 1rem;
+        display: flex;
+        margin-left: 4vw;
+    }
+}
+
+
+@mixin row {
+
+    .product {
+        padding: 10px;
+
+        .productCategory {
+            font-size: 1rem !important;
+            justify-content: center;
+            display: flex;
+        }
+    
+    .productPrincipalContainer {
+        flex-direction: column;
+            
+            .productSlider {
+                justify-content: center;
+                flex-direction: row !important;
+                margin: 1rem 0rem;
+
+                .productImageContainer {
+                    flex-direction: row !important;
+                }
+             }
+        }
+    }
+}
+
+@include small {
+    @include row;
+    @include smallTitles;
+}
+
+@include smalltomedium {
+    @include row;
+}
+
 
 .product {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     
     
     .productContainer {
@@ -104,7 +166,7 @@
         }
 
         .productTitle {
-            font-size: 46px;
+            font-size: 3rem;
             color: black;
         }
 
@@ -120,7 +182,7 @@
 
         .productPrincipalContainer {
             display: flex;
-            height: 800px;
+            height: auto;
 
             .productSlider {
                 flex: 1;
