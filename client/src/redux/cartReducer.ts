@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction, StateFromReducersMapObject } from "@reduxjs/toolkit"
 
-
-
-
-
 type initialState = {
     products: [] | string[]
     quantity: number,
