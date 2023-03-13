@@ -9,6 +9,7 @@ import Image from '../../assets/Logo.png'
 import { useSelector } from 'react-redux'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import axios, { Axios } from 'axios'
+import CartImage from '../../assets/CartImage.png'
 
 const Navbar: React.FC = () => {
     const [openCart, setOpenCart] = useState<boolean>(false);
@@ -16,6 +17,7 @@ const Navbar: React.FC = () => {
     const [search, setSearch] = useState<string>("");
     const quantity = useSelector((state: any) => state.cart.quantity)
     const [searchItem, setSearchItem] = useState<any>();
+    const [isBarOn, setIsBarOn] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -30,10 +32,13 @@ const Navbar: React.FC = () => {
         setSearchItem(response);
     }
 
-
     const searchbarFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.length >= 3) {
             setSearch(e.target.value)
+            setIsBarOn(true);
+        }
+        else {
+            setIsBarOn(false);
         }
     }
 
@@ -45,6 +50,36 @@ const Navbar: React.FC = () => {
             </Link>
             <div className="navSearchbarContainer">
             <input className="navSearchbar" type="text" onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/> 
+            {isBarOn ?
+            <div className="navSearchbarItemContainer"> 
+                <div className="navSearchbarItem"> 
+                    <div className="navSearchbarItemImage">
+                    <img src={CartImage} />
+                    </div>
+                    <div className="navSearchbarText"> 
+                        <div className="navSearchbarItemTitle">
+                        <h2> nothing else </h2>
+                        </div>
+                        <div className="navSearchbarItemDesc">
+                        <p> this is desc</p>
+                        </div>
+                    </div>    
+                </div>
+                <div className="navSearchbarItem"> 
+                    <div className="navSearchbarItemImage">
+                    <img src={CartImage} />
+                    </div>
+                    <div className="navSearchbarText"> 
+                        <div className="navSearchbarItemTitle">
+                        <h2> nothing else </h2>
+                        </div>
+                        <div className="navSearchbarItemDesc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nobis architecto accusantium maxime nam, repellendus temporibus obcaecati cumque neque beatae ex dolorem consectetur molestiae explicabo perferendis aperiam. Ipsa officiis ad ut nulla eaque voluptatum, incidunt modi qui quam doloribus cumque voluptatem repellat consequuntur, voluptates nemo odit quisquam et neque rem.
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            : null}
             <AiOutlineSearch className="navIcon"/>
             </div>
             <div className="navButtons"> 
