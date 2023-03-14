@@ -8,8 +8,11 @@ import Cart from './Cart'
 import Image from '../../assets/Logo.png'
 import { useSelector } from 'react-redux'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import axios, { Axios } from 'axios'
+import axios, { Axios, AxiosResponse } from 'axios'
 import CartImage from '../../assets/CartImage.png'
+import { ProductProps } from '../Product/Product'
+import { AxiosHeaders } from "axios"
+
 
 const Navbar: React.FC = () => {
     const [openCart, setOpenCart] = useState<boolean>(false);
@@ -18,15 +21,35 @@ const Navbar: React.FC = () => {
     const quantity = useSelector((state: any) => state.cart.quantity)
     const [searchItem, setSearchItem] = useState<any>();
     const [isBarOn, setIsBarOn] = useState<boolean>(false);
+    const [partiallyResponses, setPartiallyResponses] = useState<any[]>([]);
 
 
     useEffect(() => {
         axios.get('http://localhost:3001/product')
-        .then((responses) => {
-            (responses.data.some((response: any) => response.categories === search ? searchingItemFunc(response.categories) : setIsFound(false)))
-        })
+        .then(
+            async (responses: AxiosResponse) => {
+                try {
+                    responses.data.forEach((responseData: any) => {
+                        if (search.length > 5 && responseData.name?.toLowerCase().includes(search) && responseData.description?.toLowerCase().includes(search)) {
+                            setPartiallyResponses((prevResponses: any) => {
+                                const isDuplicate = prevResponses.some((response: any) => response._id === responseData._id)
+                                if (!isDuplicate) {
+                                    return [...prevResponses, responseData]
+                                }
+                                return prevResponses;
+                            })
+                        }
+                    })
+                }
+                catch(err) {
+                    console.log(err)
+                }
+            }
+        )
     }, [search])
-    
+
+    console.log(partiallyResponses)
+
     const searchingItemFunc = (response: any) => {
         setIsFound(true);
         setSearchItem(response);
@@ -34,7 +57,7 @@ const Navbar: React.FC = () => {
 
     const searchbarFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.length >= 3) {
-            setSearch(e.target.value)
+            setSearch(e.target.value.toLowerCase())
             setIsBarOn(true);
         }
         else {
@@ -58,23 +81,10 @@ const Navbar: React.FC = () => {
                     </div>
                     <div className="navSearchbarText"> 
                         <div className="navSearchbarItemTitle">
-                        <h2> nothing else </h2>
+                        <h2> {search} </h2>
                         </div>
                         <div className="navSearchbarItemDesc">
                         <p> this is desc</p>
-                        </div>
-                    </div>    
-                </div>
-                <div className="navSearchbarItem"> 
-                    <div className="navSearchbarItemImage">
-                    <img src={CartImage} />
-                    </div>
-                    <div className="navSearchbarText"> 
-                        <div className="navSearchbarItemTitle">
-                        <h2> nothing else </h2>
-                        </div>
-                        <div className="navSearchbarItemDesc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nobis architecto accusantium maxime nam, repellendus temporibus obcaecati cumque neque beatae ex dolorem consectetur molestiae explicabo perferendis aperiam. Ipsa officiis ad ut nulla eaque voluptatum, incidunt modi qui quam doloribus cumque voluptatem repellat consequuntur, voluptates nemo odit quisquam et neque rem.
                         </div>
                     </div>    
                 </div>
