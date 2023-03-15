@@ -2,7 +2,7 @@ import './Navbar.scss'
 import { BsCart2 } from 'react-icons/bs'
 import { VscAccount } from 'react-icons/vsc'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import Cart from './Cart'
 import Image from '../../assets/Logo.png'
@@ -16,44 +16,43 @@ import { AxiosHeaders } from "axios"
 
 const Navbar: React.FC = () => {
     const [openCart, setOpenCart] = useState<boolean>(false);
-    const [isFound, setIsFound] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
     const quantity = useSelector((state: any) => state.cart.quantity)
-    const [searchItem, setSearchItem] = useState<any>();
     const [isBarOn, setIsBarOn] = useState<boolean>(false);
-    const [partiallyResponses, setPartiallyResponses] = useState<any[]>([]);
+    const [partiallyResponses, setPartiallyResponses] = useState<ProductProps[]>([]);
 
 
-    useEffect(() => {
-        axios.get('http://localhost:3001/product')
-        .then(
-            async (responses: AxiosResponse) => {
-                try {
-                    responses.data.forEach((responseData: any) => {
-                        if (search.length > 5 && responseData.name?.toLowerCase().includes(search) && responseData.description?.toLowerCase().includes(search)) {
-                            setPartiallyResponses((prevResponses: any) => {
-                                const isDuplicate = prevResponses.some((response: any) => response._id === responseData._id)
-                                if (!isDuplicate) {
-                                    return [...prevResponses, responseData]
-                                }
-                                return prevResponses;
-                            })
-                        }
-                    })
-                }
-                catch(err) {
-                    console.log(err)
-                }
+    const fetchData = async() => { axios.get('http://localhost:3001/product')
+    .then(
+        (responses: AxiosResponse) => {
+            try {
+                responses.data.forEach((responseData: ProductProps) => {
+                    if ((search.length > 3) && (responseData.name?.toLowerCase().includes(search) || responseData.description?.toLowerCase().includes(search) || (responseData.name?.toLowerCase().includes(search.slice(0, 3))))) {
+                        setPartiallyResponses((prevResponses: ProductProps[]) => {
+                            const isDuplicate = prevResponses.some((response: ProductProps) => response._id === responseData._id)
+                            if (!isDuplicate) {
+                                return [...prevResponses, responseData]
+                            }
+                            return prevResponses;
+                        })
+                    }
+                    else {
+                        setPartiallyResponses([])
+                    }
+                })
             }
-        )
+            catch(err) {
+                console.log(err)
+            }
+        }
+    )
+    }
+
+
+    useEffect(() => {  
+        fetchData()
     }, [search])
 
-    console.log(partiallyResponses)
-
-    const searchingItemFunc = (response: any) => {
-        setIsFound(true);
-        setSearchItem(response);
-    }
 
     const searchbarFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.length >= 3) {
@@ -65,6 +64,12 @@ const Navbar: React.FC = () => {
         }
     }
 
+    const navigate = useNavigate()
+    const location = useLocation();
+    const navigateOnClick = (id: string) => {
+        navigate(`/product/${id}`)
+    }
+
   return (
     <div className="navbar">
         <div className="navbarContainer">
@@ -72,24 +77,28 @@ const Navbar: React.FC = () => {
             <img src={Image} alt="logo" className="navLogo" />
             </Link>
             <div className="navSearchbarContainer">
-            <input className="navSearchbar" type="text" onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/> 
-            {isBarOn ?
-            <div className="navSearchbarItemContainer"> 
-                <div className="navSearchbarItem"> 
+            <input className="navSearchbar" type="text" onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/>
+            <div className="navSearchbarItemsContainer"> 
+            {
+            partiallyResponses.map((itemResponse: ProductProps) => {
+                return (
+                <div className="navSearchbarItem" key={itemResponse._id} onClick={() => navigateOnClick(`${itemResponse._id}`)}> 
                     <div className="navSearchbarItemImage">
-                    <img src={CartImage} />
+                    <img src={itemResponse.img[0]} />
                     </div>
                     <div className="navSearchbarText"> 
                         <div className="navSearchbarItemTitle">
-                        <h2> {search} </h2>
+                        <h2> {itemResponse.name} </h2>
                         </div>
                         <div className="navSearchbarItemDesc">
-                        <p> this is desc</p>
+                        <p> {itemResponse.description} </p>
                         </div>
                     </div>    
                 </div>
-            </div>
-            : null}
+            )
+        })
+    }
+        </div>
             <AiOutlineSearch className="navIcon"/>
             </div>
             <div className="navButtons"> 

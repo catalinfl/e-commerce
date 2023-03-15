@@ -101,7 +101,7 @@ $navbargreen: hsl(145, 65%, 53%);
             }
             
             @include small {
-                .navSearchbarItemContainer {
+                .navSearchbarItemsContainer {
                     width: 120% !important;
                     margin-left: -1.2rem;
 
@@ -124,7 +124,7 @@ $navbargreen: hsl(145, 65%, 53%);
             }
 
             @include smalltomedium {
-                .navSearchbarItemContainer {
+                .navSearchbarItemsContainer {
                     width: 110% !important;
                     margin-left: -2rem;
 
@@ -145,7 +145,7 @@ $navbargreen: hsl(145, 65%, 53%);
                 }             
             }
 
-            .navSearchbarItemContainer {
+            .navSearchbarItemsContainer {
                 background-color: white;
                 width: 100%;
                 height: auto;
