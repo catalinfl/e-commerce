@@ -16,6 +16,10 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
 
 export const getProduct = async (req: Request, res: Response) => {
     try {
+        // need improvements here
+        if (req.query?._id !== undefined) {
+            console.log("it works")
+        }
         const myProduct = await Product.findById({ _id: req.params.id })
         res.status(200).json(myProduct);
     }

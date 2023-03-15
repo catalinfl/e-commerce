@@ -41,10 +41,10 @@ export type ProductProps = {
 
 const Product = (props: any) => {
 
-    const principalRef = React.useRef<HTMLImageElement>(null);
-    const photoRef = React.useRef<HTMLImageElement>(null);
-    const buttonRef = React.useRef<HTMLDivElement>(null);
-    const [isClicked, setIsClicked] = React.useState<boolean>(false);
+    const principalRef = useRef<HTMLImageElement>(null);
+    const photoRef = useRef<HTMLImageElement>(null);
+    const buttonRef = useRef<HTMLDivElement>(null);
+    const [isClicked, setIsClicked] = useState<boolean>(false);
 
     const dispatch = useDispatch()
     // const favoriteRef = React.forwardRef<HTMLButtonElement>(null);

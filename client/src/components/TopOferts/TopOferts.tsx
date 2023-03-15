@@ -4,7 +4,6 @@ import './TopOferts.scss'
 import { useEffect } from 'react'
 // import TopOfertsCards from './TopOfertsCards'
 import CardProduct from '../Card/CardProduct'
-import Image from "../../assets/CartImage.png"
 import { Link, NavigateFunction, useNavigate } from "react-router-dom"
 
 type TopOfertsProps = {
