@@ -16,12 +16,18 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
 
 export const getProduct = async (req: Request, res: Response) => {
     try {
-        // need improvements here
-        if (req.query?._id !== undefined) {
-            console.log("it works")
-        }
         const myProduct = await Product.findById({ _id: req.params.id })
         res.status(200).json(myProduct);
+    }
+    catch(err) {
+        res.status(404).json(err);
+    }
+}
+
+export const getProductQuery = async (req: Request, res: Response) => {
+    try {
+        const queryProduct = await Product.find({ price: req.query.price })
+        res.status(200).json(queryProduct)
     }
     catch(err) {
         res.status(404).json(err);

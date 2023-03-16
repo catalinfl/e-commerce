@@ -7,6 +7,7 @@ import express from "express"
 import cors from "cors";
 import orderRoute from './routes/order';
 import userRoute from './routes/user';
+import { getProductQuery } from './controllers/product';
 
 
 dotenv.config();
