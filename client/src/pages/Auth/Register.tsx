@@ -27,7 +27,6 @@ const Register: React.FC = (): ReactElement => {
         axios.post("http://localhost:3001/auth/register")
     }
 
-
     const settingForm = (e: React.ChangeEvent<HTMLInputElement>, FormType: keyof RegisterType) => {
         setRegister({ ...register, [FormType]: e.target.value})
     }

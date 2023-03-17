@@ -35,7 +35,7 @@ export type ProductProps = {
     _id?: string
     img: Array<string>,
     oldPrice: string,
-    top?: boolean
+    top: boolean
 }
 
 

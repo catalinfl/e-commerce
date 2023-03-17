@@ -8,14 +8,19 @@ import { publicRequest } from '../../requestMethods'
 import { ProductProps } from '../../components/Product/Product'
 
 const Home: React.FC = () => {
-    const [products, setProducts] = useState<ProductProps[] & any>()
+    const [products, setProducts] = useState<ProductProps[]>()
 
 
     useEffect(() => {
         const getProducts = async () => {
             try {
                 const res = await publicRequest.get("/product");
-                setProducts(res.data);
+                const filterProducts = res.data.filter((product: ProductProps) => {
+                    if (product.top) {
+                        return product;
+                    }
+                })
+                setProducts(filterProducts);
             }
             catch(err) {
                 console.log(err);

@@ -7,10 +7,10 @@ import { editProduct, getProduct, getProductQuery, getProducts, postProduct } fr
 
 const router = express.Router();
 
-router.get('/', getProductQuery);
 router.get('/', getProducts);
+router.get('/search', getProductQuery);
 router.get('/:id', getProduct);
-router.put('/:id', verifyTokenAndAdmin, editProduct);
-router.post('/', verifyTokenAndAdmin, postProduct);
+router.put('/:id', editProduct);
+router.post('/', postProduct);
 
 export default router

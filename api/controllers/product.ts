@@ -2,12 +2,22 @@ import express, {Request, Response, NextFunction} from "express"
 import dotenv from "dotenv"
 import { createError } from "../utils/error";
 import Product from "../models/Product";
+import Brand from "../models/Brand";
 
-export const postProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const newProduct = new Product(req.body);
+export const postProduct = async (req: Request, res: Response, next: NextFunction) => {    
     try {
-        const savedProduct = newProduct.save();
-        res.status(200).send(savedProduct);
+        const { brand } = req.body
+        
+        const newProduct = new Product(req.body);
+        const savedProduct = await newProduct.save();
+
+        const newBrand = new Brand({
+            mainObject: savedProduct._id,
+            brand
+        })
+        const savedBrand = await newBrand.save();
+        
+        res.status(200).send(savedBrand);
     }
     catch(err) {
         next(createError(501, err));

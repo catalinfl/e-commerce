@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom'
 const Categories: React.FC = () => {
 
   const [isCategoriesOpen, setIsCategoriesOpen] = useState<boolean>(false);
-  
-
 
   return (
     <div className="categories">
@@ -21,7 +19,7 @@ const Categories: React.FC = () => {
               <CategoriesMenu />
               </div>
             }
-           <Link className="categoriesItem" to='/product/636c1a743f63b11cb3085bb9'> <button className="categoriesItem"> Item 2 </button> </Link> 
+           <Link className="categoriesItem" to='/search'> <button className="categoriesItem"> Item 2 </button> </Link> 
             <button className="categoriesItem"> Item 3 </button>
             <button className="categoriesItem"> Item 4 </button>
         </div>
