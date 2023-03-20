@@ -14,6 +14,15 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+export const createUser = async (req: Request, res: Response) => {
+    try {
+        
+    }
+    catch(err) {
+
+    }
+}
+
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const getUsers = await User.find();
