@@ -18,8 +18,8 @@ import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/cartReducer'
 
 export type ProductProps = {
-    name?: string;
-    price: string;
+    name: string;
+    price: number;
     warranty?: string,
     description?: string,
     specifications?: string,
@@ -32,7 +32,7 @@ export type ProductProps = {
     subcategory?: string,
     productCode?: string,
     inStock?: string,
-    _id?: string
+    _id: string
     img: Array<string>,
     oldPrice: string,
     top: boolean
@@ -225,8 +225,17 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
         }
     }
 
+
+    const productForDispatch = {
+        _id: product._id as string,
+        name: product.name as string,
+        price: parseInt(product.price) as number,
+        quantity: quantity as number,
+        image: product.image as string,
+    }
+
     const handleClick = () => {
-        dispatch(addProduct({...product, quantity, price: product.price * quantity}))
+        dispatch(addProduct({ quantity: quantity, products: productForDispatch, total: parseInt(product.price) * quantity }))
     }
 
     return (

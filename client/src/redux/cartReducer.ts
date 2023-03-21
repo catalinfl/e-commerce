@@ -3,13 +3,22 @@ import { createSlice, PayloadAction, StateFromReducersMapObject } from "@reduxjs
 export type initialState = {
     products: ProductType[];
     quantity: number;
-    total: number;
-    name: string | null
+    total?: number;
   };
 
 type Action = {
     type: string
-    payload: ProductType
+    payload: {
+        quantity: number,
+        products: {
+            _id: string,
+            name: string,
+            price: number,
+            quantity: number,
+            image: string
+        },
+        total?: number
+    }
 }
 
 type ProductType = {
@@ -20,34 +29,52 @@ type ProductType = {
 }
 
 type ActionOptional = {
-    type?: string,
-    payload?: ProductType,
+    type: string
+    payload?: {
+        quantity: number,
+        products: {
+            _id: string,
+            name: string,
+            price: number,
+            quantity: number,
+            image: string
+        },
+        total?: number
+    }
 }
+
 
 
 const initialState: initialState = {
     products: [],
     quantity: 0,
     total: 0,
-    name: null
 }
 
+// create slice
+    
 
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
         addProduct: (state: initialState, action: Action) => {
-            if (state.products.every((product: any) => product._id !== action.payload._id)) {
-            state.quantity += action.payload.quantity;
-            state.products?.push(action.payload)
-            state.total += action.payload.price;
-            state.name = action.payload.name;
+            if (state.products.filter((product: ProductType) => product._id === action.payload.products._id).length > 0) {
+                state.quantity += action.payload.quantity;
+                state.products = state.products.map((product: ProductType) => {
+                    if (product._id === action.payload.products._id) {
+                        product.quantity += action.payload.quantity
+                        product.price += action.payload.products.price * action.payload.products.quantity
+                    }
+                    return product
+                } 
+            )
+        }
+        else {
+                state.products?.push(action.payload.products)
+                state.quantity += action.payload.quantity;
             }
-            else {
-                state.quantity += action.payload.quantity 
-            }
-            state.total += action.payload.price;
+                state.total! += action.payload.products.price * action.payload.products.quantity
         },
         reset: (state: initialState, action: ActionOptional) => {
             return initialState
