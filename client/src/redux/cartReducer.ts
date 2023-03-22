@@ -2,14 +2,14 @@ import { createSlice, PayloadAction, StateFromReducersMapObject } from "@reduxjs
 
 export type initialState = {
     products: ProductType[];
-    quantity: number;
-    total?: number;
+    totalQuantity: number;
+    totalPrice?: number;
   };
 
 type Action = {
     type: string
     payload: {
-        quantity: number,
+        totalQuantity: number,
         products: {
             _id: string,
             name: string,
@@ -17,7 +17,7 @@ type Action = {
             quantity: number,
             image: string
         },
-        total?: number
+        totalPrice?: number
     }
 }
 
@@ -31,7 +31,7 @@ type ProductType = {
 type ActionOptional = {
     type: string
     payload?: {
-        quantity: number,
+        totalQuantity: number,
         products: {
             _id: string,
             name: string,
@@ -39,7 +39,7 @@ type ActionOptional = {
             quantity: number,
             image: string
         },
-        total?: number
+        totalPrice?: number
     }
 }
 
@@ -47,8 +47,8 @@ type ActionOptional = {
 
 const initialState: initialState = {
     products: [],
-    quantity: 0,
-    total: 0,
+    totalQuantity: 0,
+    totalPrice: 0,
 }
 
 // create slice
@@ -60,10 +60,10 @@ const cartSlice = createSlice({
     reducers: {
         addProduct: (state: initialState, action: Action) => {
             if (state.products.filter((product: ProductType) => product._id === action.payload.products._id).length > 0) {
-                state.quantity += action.payload.quantity;
+                state.totalQuantity += action.payload.totalQuantity;
                 state.products = state.products.map((product: ProductType) => {
                     if (product._id === action.payload.products._id) {
-                        product.quantity += action.payload.quantity
+                        product.quantity += action.payload.products.quantity
                         product.price += action.payload.products.price * action.payload.products.quantity
                     }
                     return product
@@ -72,9 +72,9 @@ const cartSlice = createSlice({
         }
         else {
                 state.products?.push(action.payload.products)
-                state.quantity += action.payload.quantity;
+                state.totalQuantity += action.payload.totalQuantity;
             }
-                state.total! += action.payload.products.price * action.payload.products.quantity
+                state.totalPrice! += action.payload.products.price * action.payload.products.quantity
         },
         reset: (state: initialState, action: ActionOptional) => {
             return initialState

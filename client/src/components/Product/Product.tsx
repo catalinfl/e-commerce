@@ -235,7 +235,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
     }
 
     const handleClick = () => {
-        dispatch(addProduct({ quantity: quantity, products: productForDispatch, total: parseInt(product.price) * quantity }))
+        dispatch(addProduct({ totalQuantity: quantity, products: productForDispatch, totalPrice: parseInt(product.price) }))
     }
 
     return (
