@@ -17,17 +17,25 @@ import { AxiosHeaders } from "axios"
 const Navbar: React.FC = () => {
     const [openCart, setOpenCart] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
-    const quantity = useSelector((state: any) => state.cart.quantity)
     const [isBarOn, setIsBarOn] = useState<boolean>(false);
     const [partiallyResponses, setPartiallyResponses] = useState<ProductProps[]>([]);
-
 
     const fetchData = () => { axios.get('http://localhost:3001/product')
     .then(
         (responses: AxiosResponse) => {
             try {
+                if (search.length > 3) {
                 responses.data.forEach((responseData: ProductProps) => {
-                    if ((search.length > 3) && (responseData.name?.toLowerCase().includes(search) || responseData.description?.toLowerCase().includes(search) || (responseData.name?.toLowerCase().includes(search.slice(0, 3))))) {
+                    if (responseData.name?.toLowerCase().includes(search) || responseData.description?.toLowerCase().includes(search) || responseData.name?.toLowerCase().includes(search.slice(0, 3))) {
+                        if (responseData.name?.toLowerCase().includes(search)) {
+                            console.log("asta e 1")
+                        }
+                        if (responseData.name?.toLowerCase().includes(search.slice(0, 3))) {
+                            console.log("asta e 2")
+                        }
+                        if (responseData.description?.toLowerCase().includes(search)) {
+                            console.log("e a 3-a")
+                        }
                         setPartiallyResponses((prevResponses: ProductProps[]) => {
                             const isDuplicate = prevResponses.some((response: ProductProps) => response._id === responseData._id)
                             if (!isDuplicate) {
@@ -36,11 +44,13 @@ const Navbar: React.FC = () => {
                             return prevResponses;
                         })
                     }
-                    else {
-                        setPartiallyResponses([])
-                    }
+            
                 })
             }
+            else {
+                setPartiallyResponses([])
+            }
+        }
             catch(err) {
                 console.log(err)
             }
@@ -71,9 +81,7 @@ const Navbar: React.FC = () => {
     }
 
 
-    console.log(search)
     const productsMaxQuantity = useSelector((state: stateTypes) => state.cart.totalQuantity)    
-    console.log(partiallyResponses)
 
   return (
     <div className="navbar">
@@ -85,6 +93,7 @@ const Navbar: React.FC = () => {
             <input className="navSearchbar" type="text" onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/>
             <div className="navSearchbarItemsContainer"> 
             {
+                isBarOn &&
             partiallyResponses.map((itemResponse: ProductProps) => {
                 return (
                 <div className="navSearchbarItem" key={itemResponse._id} onClick={() => navigateOnClick(`${itemResponse._id}`)}> 
