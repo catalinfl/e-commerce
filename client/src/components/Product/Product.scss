@@ -34,9 +34,11 @@
 
 @mixin descriptions {
     .productDescriptionTitle, .productSpecificationsTitle, .productReviewsTitle, .productAskTitle {
+        flex-wrap: wrap;
         display: flex;
-        flex: 8;
+        flex: 9;
     }
+    flex-wrap: wrap;
 
     .productArrowDown {
         display: flex;

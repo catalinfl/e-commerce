@@ -39,7 +39,7 @@ app.use('/product', productRoute);
 app.use('/order', orderRoute);
 app.use('/user', userRoute);
 
-app.listen(PORT || 3000, () => {
-    console.log("It's working!")
+app.listen(PORT, () => {
+    console.log("It's working on port " + PORT);
 })
 

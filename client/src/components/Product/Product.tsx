@@ -231,7 +231,7 @@ const reductionColorCalculator: Function = (precision: string): string | null =>
         name: product.name as string,
         price: parseInt(product.price) as number,
         quantity: quantity as number,
-        image: product.image as string,
+        image: product.img[0] as string,
     }
 
     const handleClick = () => {

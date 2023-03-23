@@ -4,7 +4,7 @@ import { VscAccount } from 'react-icons/vsc'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import Cart from './Cart'
+import Cart, { stateTypes } from './Cart'
 import Image from '../../assets/Logo.png'
 import { useSelector } from 'react-redux'
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
     const [partiallyResponses, setPartiallyResponses] = useState<ProductProps[]>([]);
 
 
-    const fetchData = async() => { axios.get('http://localhost:3001/product')
+    const fetchData = () => { axios.get('http://localhost:3001/product')
     .then(
         (responses: AxiosResponse) => {
             try {
@@ -70,6 +70,11 @@ const Navbar: React.FC = () => {
         navigate(`/product/${id}`)
     }
 
+
+    console.log(search)
+    const productsMaxQuantity = useSelector((state: stateTypes) => state.cart.totalQuantity)    
+    console.log(partiallyResponses)
+
   return (
     <div className="navbar">
         <div className="navbarContainer">
@@ -102,7 +107,7 @@ const Navbar: React.FC = () => {
             <AiOutlineSearch className="navIcon"/>
             </div>
             <div className="navButtons"> 
-            <button className="navButtonCart" onClick={() => setOpenCart(!openCart)}> <BsCart2 /> Cart <span className="circleQuantity">  {quantity} </span> </button>
+            <button className="navButtonCart" onClick={() => setOpenCart(!openCart)}> <BsCart2 /> Cart <span className="circleQuantity">  {productsMaxQuantity} </span> </button>
             {openCart && <Cart />}
             <button className="navButtonAccount"> <VscAccount/> Login </button>
             </div>

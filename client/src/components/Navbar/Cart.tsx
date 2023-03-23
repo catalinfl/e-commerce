@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initialState, reset } from '../../redux/cartReducer';
 import './Cart.scss'
 
-type stateTypes = {
+export type stateTypes = {
   cart: {
-    quantity: number,
+    totalQuantity: number,
     products: {
       _id: string,
       name: string,
@@ -13,31 +13,32 @@ type stateTypes = {
       quantity: number,
       image: string
     }[],
-    total: number,
+    totalPrice: number,
   }
 }
 
 
 const Cart = () => {
 
-  const cartProducts = useSelector((state: stateTypes) => state.cart) 
-  console.log(cartProducts)
-  const dispatch = useDispatch();
+
+const cartProducts = useSelector((state: stateTypes) => state.cart) // get the cart from redux 
+console.log(cartProducts)
+const dispatch = useDispatch()
+
+
+
 
   return (
     <div className="cart">
         <div className="cartContainer">
           <div className="cartContainerTriangle"> </div>
           <div className="cartHeader"> 
-            {cartProducts.quantity}
-            {cartProducts.quantity > 1 ? ' items ' : ' item '}
-            in your cart
-            <br />
+            <span className="cartHeaderTitle"> Cart </span>
             {cartProducts.products.map(
-              (product) => {
+              (product, index) => {
                 return (
-                  <div className="cartProduct">
-                    <img src={product.image} alt="" />
+                  <div className="cartProduct" key={index}>
+                    <img src={product.image} alt="image" />
                     <div className="cartProductInfo">
                       <span className="cartProductName"> {product.name} </span>
                       <span className="cartProductQuantity"> {product.quantity} </span>

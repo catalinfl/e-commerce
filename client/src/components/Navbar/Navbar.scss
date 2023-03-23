@@ -103,7 +103,7 @@ $navbargreen: hsl(145, 65%, 53%);
             @include small {
                 .navSearchbarItemsContainer {
                     width: 120% !important;
-                    margin-left: -1.2rem;
+                    margin-left: 1rem;
 
                     .navSearchbarItemImage > img {
                         width: 50px !important;
