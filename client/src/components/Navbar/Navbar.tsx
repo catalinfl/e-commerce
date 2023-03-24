@@ -27,15 +27,6 @@ const Navbar: React.FC = () => {
                 if (search.length > 3) {
                 responses.data.forEach((responseData: ProductProps) => {
                     if (responseData.name?.toLowerCase().includes(search) || responseData.description?.toLowerCase().includes(search) || responseData.name?.toLowerCase().includes(search.slice(0, 3))) {
-                        if (responseData.name?.toLowerCase().includes(search)) {
-                            console.log("asta e 1")
-                        }
-                        if (responseData.name?.toLowerCase().includes(search.slice(0, 3))) {
-                            console.log("asta e 2")
-                        }
-                        if (responseData.description?.toLowerCase().includes(search)) {
-                            console.log("e a 3-a")
-                        }
                         setPartiallyResponses((prevResponses: ProductProps[]) => {
                             const isDuplicate = prevResponses.some((response: ProductProps) => response._id === responseData._id)
                             if (!isDuplicate) {
@@ -75,9 +66,18 @@ const Navbar: React.FC = () => {
     }
 
     const navigate = useNavigate()
-    const location = useLocation();
     const navigateOnClick = (id: string) => {
         navigate(`/product/${id}`)
+    }
+
+    const keyListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const category = partiallyResponses[0]?.categories?.toLowerCase();
+        if (e.ctrlKey && e.key === 'a') {
+            setPartiallyResponses([])
+        }
+        if (e.key === "Enter" && category) {
+            navigate(`/search/${category}`)
+        }
     }
 
 
@@ -90,8 +90,13 @@ const Navbar: React.FC = () => {
             <img src={Image} alt="logo" className="navLogo" />
             </Link>
             <div className="navSearchbarContainer">
-            <input className="navSearchbar" type="text" onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/>
+            <input className="navSearchbar" type="text" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => { keyListener(e) }} onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/>
             <div className="navSearchbarItemsContainer"> 
+                { partiallyResponses[0]?.categories?.toLowerCase() && <div className="navSearchbarItem">
+                    <div className="navSearchbarItemTitle grey" onClick={() => navigate(`/search/${partiallyResponses[0]?.categories?.toLowerCase()}`)}>
+                        <h2> Mai multe căutari pentru {partiallyResponses[0]?.categories?.toLowerCase()}... </h2>
+                        </div>
+                </div>}
             {
                 isBarOn &&
             partiallyResponses.map((itemResponse: ProductProps) => {

@@ -42,37 +42,16 @@ const Searchpage: React.FC = () => {
               <div className="searchpageSort">
                 <p> Sorteaza dupa: </p>
                 <select className="searchpageSelection" id="selection">
-                  <option className="searchpageOption"  value="relevanta"> Relevanta </option> 
-                  <option className="searchpageOption"  value="nume"> Nume </option> 
-                  <option className="searchpageOption"  value="crescator"> Crescator </option> 
-                  <option className="searchpageOption"  value="descrescator"> Descrescator </option> 
-                  <option className="searchpageOption"  value="relevanta"> Cele mai vandute </option> 
-                  <option className="searchpageOption"  value="relevanta"> Cel mai mare discount </option> 
+                  <option className="searchpageOption" value="relevanta"> Relevanta </option> 
+                  <option className="searchpageOption" value="nume"> Nume </option> 
+                  <option className="searchpageOption" value="crescator"> Crescator </option> 
+                  <option className="searchpageOption" value="descrescator"> Descrescator </option> 
+                  <option className="searchpageOption" value="relevanta"> Cele mai vandute </option> 
+                  <option className="searchpageOption" value="relevanta"> Cel mai mare discount </option> 
                 </select>
               </div>
               <div className="searchpageItemsContainer">
                 <div className="searchpageItemsFound">
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                </div>
-                <div className="searchpageItemsFound">
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                </div>
-                <div className="searchpageItemsFound">
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
-                </div>
-                <div className="searchpageItemsFound">
-                  <CardProduct />
-                  <CardProduct />
-                  <CardProduct />
                   <CardProduct />
                 </div>
             </div>

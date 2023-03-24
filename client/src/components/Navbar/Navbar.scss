@@ -63,6 +63,8 @@ $navbargreen: hsl(145, 65%, 53%);
             .navLogo {
                 display: none;
             }
+
+
         }
         
         @media screen and (max-width: 968px) {
@@ -74,9 +76,9 @@ $navbargreen: hsl(145, 65%, 53%);
             .navHamburger {
                 display: flex !important;
             }
+
             .navSearchbar {
                 width: 65vw !important;
-                margin-left: -5vw;
             }
 
             .navHamburger {
@@ -102,21 +104,21 @@ $navbargreen: hsl(145, 65%, 53%);
             
             @include small {
                 .navSearchbarItemsContainer {
-                    width: 120% !important;
-                    margin-left: 1rem;
+                    width: 100% !important;
+                    font-size: 10px;
 
                     .navSearchbarItemImage > img {
-                        width: 50px !important;
-                        height: 50px !important;
+                        width: 75px !important;
+                        height: 75px !important;
                     }
 
                     .navSearchbarText {
                         .navSearchbarItemTitle {
-                            font-size: 0.5rem !important;
+                            font-size: 0.75rem !important;
                         }
 
                         .navSearchbarItemDesc {
-                            font-size: 0.5rem !important;
+                            font-size: 0.75rem !important;
                         }
 
                     }
@@ -153,14 +155,27 @@ $navbargreen: hsl(145, 65%, 53%);
                 z-index: 3;
                 display: flex;
                 flex-direction: column;
+                font-family: 'Segoe UI';
                 
                 
                 .navSearchbarItem {
-                    padding: 10px;
+                    padding: 0.1rem;
                     flex-direction: row;
                     display: flex;
                     border: solid 1px grey;
                     cursor: pointer;
+                    padding: 8px 15px;
+                    font-size: 0.60rem;
+
+                    &:hover {
+                        background-color: #f2f2f2;
+                    }
+
+
+                    .grey {
+                        color: rgb(47, 47, 47);
+                    }
+
                 }
                 
                 .navSearchbarItemImage > img {
@@ -173,11 +188,16 @@ $navbargreen: hsl(145, 65%, 53%);
                     flex-direction: column;
                     padding-left: 10px;
                     width: 100%;
+                    margin-top: -5px;
                     
                     .navSearchbarItemTitle {
                         font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                         font-size: 1rem;
-                        border: 2px solid green;
+                        font-weight: bold;
+                        border-style: solid;
+                        border-width: 2px;
+                        font-size: 13px;
+                        border-image: linear-gradient(to bottom, green, rgb(23, 195, 23)) 1;
                         border-top: 0px;
                         border-left: 0px;
                         border-right: 1px;
@@ -185,7 +205,7 @@ $navbargreen: hsl(145, 65%, 53%);
 
                     .navSearchbarItemDesc {
                         font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        font-size: 1rem;
+                        font-size: 16px;
                     }
                 }
             }
@@ -213,7 +233,6 @@ $navbargreen: hsl(145, 65%, 53%);
 
     .navButtons {
 
-
         .navButtonAccount {
             @include button;
         }
@@ -225,10 +244,9 @@ $navbargreen: hsl(145, 65%, 53%);
             flex-shrink: 1;
 
             .circleQuantity {
-            border-radius: sphere;
             color: white;
-            padding: 0px 5px;
-            border-radius: 50%;
+            padding: 5px 5px;
+            border-radius: 35%;
             background-color: rgb(7, 159, 37);
             }
         }

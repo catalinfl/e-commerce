@@ -19,9 +19,9 @@ const Categories: React.FC = () => {
               <CategoriesMenu />
               </div>
             }
-           <Link className="categoriesItem" to='/search'> <button className="categoriesItem"> Item 2 </button> </Link> 
-            <button className="categoriesItem"> Item 3 </button>
-            <button className="categoriesItem"> Item 4 </button>
+           <Link className="categoriesItem" to='/search'> <button className="categoriesItem"> Caută un produs </button> </Link> 
+            <button className="categoriesItem"> Reduceri </button>
+            <button className="categoriesItem"> Despre </button>
         </div>
     </div>
     
