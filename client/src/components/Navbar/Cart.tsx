@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initialState, reset } from '../../redux/cartReducer';
 import './Cart.scss'
 
+
+
 export type stateTypes = {
   cart: {
     totalQuantity: number,
@@ -21,7 +23,7 @@ export type stateTypes = {
 const Cart = () => {
 
 
-const cartProducts = useSelector((state: stateTypes) => state.cart) // get the cart from redux 
+const cartProducts = useSelector((state: stateTypes) => state.cart) 
 const dispatch = useDispatch()
 
 

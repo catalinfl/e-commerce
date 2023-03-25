@@ -7,7 +7,6 @@ import Brand from "../models/Brand";
 
 type QueryType = {
     price?: string,
-    categories?: string,
     disponibility?: string,
     brand?: string,
     top?: string,
@@ -34,6 +33,19 @@ export const postProduct = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
+export const getProductsParams = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const categories = req.params.categories;
+        const products = await Product.find({
+            categories: categories
+        })
+        res.json(products).status(200)
+    }
+    catch(err) {
+        res.json(err).status(404)
+    }
+}
+
 export const getProduct = async (req: Request, res: Response) => {
     try {
         const myProduct = await Product.findById({ _id: req.params.id })
@@ -46,8 +58,8 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const getProductQuery = async (req: Request, res: Response) => {
     try {
+        if (req.params.categories) {
         const price = req.query.price as string;
-        const categories = req.query.categories as string;
         const brand = req.query.brand as string;
         const disponibility = req.query.disponibility as string;
         const top = req.query.top as string;
@@ -57,9 +69,6 @@ export const getProductQuery = async (req: Request, res: Response) => {
 
         if (price) {
             query.price = price
-        }
-        if (categories) {
-            query.categories = categories
         }
         if (brand) {
             query.brand = brand
@@ -75,6 +84,7 @@ export const getProductQuery = async (req: Request, res: Response) => {
             query);
         res.status(200).json(queriedProducts)
     }
+}
     catch(err) {
         res.status(404).json(err);
     }

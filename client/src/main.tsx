@@ -10,6 +10,7 @@ import { store, persistor } from "./redux/store"
 import { PersistGate } from 'redux-persist/integration/react'
 
 
+
 const router  = createBrowserRouter([
   { 
     path: '/',
@@ -22,7 +23,11 @@ const router  = createBrowserRouter([
   },
   {
     path: '/search',
-    element: <Search />
+    element: <Search />,
+  },
+  {
+    path: '/search/:category',
+    element: <Search />,
   },
   {
     path: '/login',
