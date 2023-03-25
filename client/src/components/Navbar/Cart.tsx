@@ -22,7 +22,6 @@ const Cart = () => {
 
 
 const cartProducts = useSelector((state: stateTypes) => state.cart) // get the cart from redux 
-console.log(cartProducts)
 const dispatch = useDispatch()
 
 
@@ -32,27 +31,42 @@ const dispatch = useDispatch()
     <div className="cart">
         <div className="cartContainer">
           <div className="cartContainerTriangle"> </div>
-          <div className="cartHeader"> 
             <span className="cartHeaderTitle"> Cart </span>
-            {cartProducts.products.map(
+            <div className="cartAllProducts">
+            {cartProducts.totalQuantity !== 0 ? 
+            cartProducts.products.map(
               (product, index) => {
                 return (
                   <div className="cartProduct" key={index}>
-                    <img src={product.image} alt="image" />
                     <div className="cartProductInfo">
-                      <span className="cartProductName"> {product.name} </span>
-                      <span className="cartProductQuantity"> {product.quantity} </span>
+                      <div className="cartProductImage">
+                      <img src={product.image} 
+                      alt="image" />
+                      </div>
+                      <div className="cartProductColumn" >
+                      <span className="cartProductName"> {product.name.length > 25 ? `${product.name.slice(0, 25)}...` : product.name } </span>
+                      </div>
+                      <span className="cartProductQuantity"> x{product.quantity} </span>
+                      <span className="cartProductPrice">
+                        {product.price} lei
+                      </span>
                     </div>
                   </div>
                 )
               }
-            )}
-            <br />
-            {/* {cartProducts.products[1].name} */}
-            <br />
+            )
+          : <div className="cartProduct noProd"> There are no products currently in cart </div>
+          }
           </div>
-          <div className="cardBody">
-          <button className="cartClearButton" onClick={() => dispatch(reset())}> Clear the cart </button>
+          <div className="cartMisc">
+            { cartProducts.totalPrice !== 0 && <div className="cartTotal">
+              <span className="cartTotalTitle"> Total: </span>
+              <span className="cartTotalPrice"> {cartProducts.totalPrice} lei </span>
+            </div>}
+          {
+            cartProducts.totalQuantity !== 0 &&
+            <button className="cartClearButton" onClick={() => dispatch(reset())}> Clear the cart </button>
+          }
           </div>
         </div>
     </div>

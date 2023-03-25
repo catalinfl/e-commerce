@@ -1,7 +1,13 @@
 @import '../../responsive/responsive.scss';
+
+// Color variables
 $hover-color: hsl(145, 64%, 43%);
 
+// Mixin variables
+$border-radius: 0px 10px;
+$box-shadow: 2px 2px 20px rgb(14, 134, 62);
 
+// Mixins
 @mixin triangle {
     background-color: transparent;
     border-top: solid transparent 10px;
@@ -14,6 +20,7 @@ $hover-color: hsl(145, 64%, 43%);
     top: -20px;
 }
 
+// Media queries
 @include big {
     .cart {
         margin-left: 1vw;
@@ -26,28 +33,134 @@ $hover-color: hsl(145, 64%, 43%);
     }
 }
 
+// Classes
 .cart {
-
     display: flex;
     background-color: white;
     position: absolute;
     z-index: 3;
-    border-radius: 0px 10px;
-    box-shadow: 2px 2px 20px rgb(14, 134, 62);
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+}
 
-    .cartContainer {
+.cartContainer {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    padding: 15px;
+    color: grey;
+    position: relative;
+
+    .cartHeaderTitle {
+        font-size: 20px;
+        font-family: 'Segoe UI';
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+        color: black;
+    }
+
+    .noProd {
+        padding: 10px 0px;
+        font-size: 15px;
+        font-family: 'Segoe UI';
+    }
+    
+    .cartProduct {
+        width: auto;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        
+        .cartProductInfo {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 10px;
+            padding: 10px;
+            border-image: linear-gradient(to bottom, green, $hover-color);
+            border-image-slice: 1;
+            border-style: solid;
+            border-width: 1px 0px;
+            
+
+            .cartProductImage {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                img {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+
+            .cartProductQuantity {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 15px;
+                font-family: 'Segoe UI';
+                flex: 0.25;
+            }
+
+            .cartProductPrice {
+                color: green;
+                font-weight: 700;
+            }
+
+            .cartProductColumn {
+                font-size: 15px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                color: green;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+
+                .cartProductName {
+                    font-size: 14px;
+                    font-family: 'Segoe UI';
+                    flex: 6;
+                    display: flex;
+                    justify-content: center;
+                }
+            }
+
+        }
+    }
+}
+
+.cartContainerTriangle {
+    @include triangle;
+}
+
+.cartMisc {
+    .cartTotal {
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
-        width: 300px;
-        height: auto;
-        padding: 15px;
-        color: grey;
-        position: relative;
+
+        &Title {
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Segoe UI';
+            text-align: right;
+        }
+
+        &Price {
+            font-size: 15px;
+            font-family: 'Segoe UI';
+            font-weight: bold;
+            text-align: right;
+            color: green;
+            margin-bottom: 10px;
+        }
     }
 
-    .cartContainerTriangle {
-        @include triangle;
-    }
 
 
     .cartClearButton {
@@ -56,7 +169,6 @@ $hover-color: hsl(145, 64%, 43%);
         padding: 10px;
         color: white;
         border-radius: 10px;
-        margin-bottom: 10px;
         cursor: pointer;
         outline: none;
         margin: auto;
