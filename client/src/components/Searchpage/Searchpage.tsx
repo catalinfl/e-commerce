@@ -3,7 +3,7 @@ import './Searchpage.scss'
 import { Checkbox } from 'pretty-checkbox-react'
 import '@djthoms/pretty-checkbox';
 import CardProduct from '../Card/CardProduct';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineConsoleSql } from 'react-icons/ai';
@@ -12,7 +12,6 @@ type SortProducts = {
   sorted: "name" | "relevance" | "growing" | "descending" | "most sold" | "biggest discount"
 }
 
-// create a type for productdata
 type ProductData = {
   _id: string,
   name: string,
@@ -32,16 +31,18 @@ type ProductData = {
 
 
 const Searchpage: React.FC = () => {
-  
 
   const { category } = useParams<{ category: string }>()
   const [sortProducts, setSortProducts] = useState<SortProducts>({sorted: "relevance"});
   const [productData, setProductData] = useState<ProductData[]>([]);
 
+  
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [category])
   
+
+
   const fetchData = async () => {
     axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
     .then(res => {
@@ -51,8 +52,6 @@ const Searchpage: React.FC = () => {
       console.log(err)
     })
   }
-
-  console.log(productData[0]._id)
 
 
   return (

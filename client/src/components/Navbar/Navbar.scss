@@ -166,6 +166,12 @@ $navbargreen: hsl(145, 65%, 53%);
                     cursor: pointer;
                     padding: 8px 15px;
                     font-size: 0.60rem;
+                    
+                    .navSearchbarClose {
+                        display: flex;
+                        text-align: right;
+
+                    }
 
                     &:hover {
                         background-color: #f2f2f2;

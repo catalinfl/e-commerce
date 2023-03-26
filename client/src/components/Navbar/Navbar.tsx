@@ -1,7 +1,7 @@
 import './Navbar.scss'
 import { BsCart2 } from 'react-icons/bs'
 import { VscAccount } from 'react-icons/vsc'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineConsoleSql, AiOutlineSearch } from 'react-icons/ai'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import Cart, { stateTypes } from './Cart'
@@ -15,11 +15,22 @@ import { AxiosHeaders } from "axios"
 
 
 const Navbar: React.FC = () => {
+    
+
+
+    
     const [openCart, setOpenCart] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
     const [isBarOn, setIsBarOn] = useState<boolean>(false);
     const [partiallyResponses, setPartiallyResponses] = useState<ProductProps[]>([]);
+    const [category, setCategory] = useState<string>("");
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
+    const location = useLocation();
+    const navigate = useNavigate()
+
+
+    
     const fetchData = () => { axios.get('http://localhost:3001/product')
     .then(
         (responses: AxiosResponse) => {
@@ -49,10 +60,26 @@ const Navbar: React.FC = () => {
     )
     }
 
-
     useEffect(() => {  
         fetchData()
     }, [search])
+
+    
+    const verifyCategory = () => {
+        var param  = location.pathname.split('/')[2]
+        console.log(param, category)
+        if (category === param || category === undefined) {
+            setIsMenuOpen(false)
+        }
+        else {
+            setIsMenuOpen(true)
+        }
+    }
+
+    useEffect(() => {
+        verifyCategory()
+    })
+
 
 
     const searchbarFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,20 +92,35 @@ const Navbar: React.FC = () => {
         }
     }
 
-    const navigate = useNavigate()
+
+
+
     const navigateOnClick = (id: string) => {
+    
+        // search by product 
         navigate(`/product/${id}`)
     }
 
+    useEffect(() => {
+        if (category === "" || category === undefined)    {
+            setCategory(location.pathname.split('/')[2])
+        }
+    }, [isMenuOpen])
+    
+
+
     const keyListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const category = partiallyResponses[0]?.categories?.toLowerCase();
+        setCategory(partiallyResponses[0]?.categories?.toLowerCase() as string);
         if (e.ctrlKey && e.key === 'a') {
             setPartiallyResponses([])
         }
+
+        // search category
         if (e.key === "Enter" && category) {
             navigate(`/search/${category}`)
         }
     }
+
 
 
     const productsMaxQuantity = useSelector((state: stateTypes) => state.cart.totalQuantity)    
@@ -91,7 +133,7 @@ const Navbar: React.FC = () => {
             </Link>
             <div className="navSearchbarContainer">
             <input className="navSearchbar" type="text" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => { keyListener(e) }} onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchbarFunc(e)}/>
-            <div className="navSearchbarItemsContainer"> 
+           { isMenuOpen && <div className="navSearchbarItemsContainer"> 
                 { partiallyResponses[0]?.categories?.toLowerCase() && <div className="navSearchbarItem">
                     <div className="navSearchbarItemTitle grey" onClick={() => navigate(`/search/${partiallyResponses[0]?.categories?.toLowerCase()}`)}>
                         <h2> Mai multe căutari pentru {partiallyResponses[0]?.categories?.toLowerCase()}... </h2>
@@ -117,7 +159,7 @@ const Navbar: React.FC = () => {
             )
         })
     }
-        </div>
+        </div>}
             <AiOutlineSearch className="navIcon"/>
             </div>
             <div className="navButtons"> 

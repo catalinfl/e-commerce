@@ -5,7 +5,6 @@ import Ratings from './Ratings'
 import Product from '../Product/Product'
 import { useNavigate } from 'react-router-dom'
 
-
 interface PropsForCards {
     price: string ,
     title: string,
