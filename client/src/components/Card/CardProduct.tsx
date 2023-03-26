@@ -3,6 +3,7 @@ import './CardProduct.scss'
 import Image from "../../assets/CartImage.png"
 import Ratings from './Ratings'
 import Product from '../Product/Product'
+import { useNavigate } from 'react-router-dom'
 
 
 interface PropsForCards {
@@ -13,9 +14,12 @@ interface PropsForCards {
     image: string,
     oldPrice?: undefined  | string,
     reviews?: undefined | string
+    _id: string
 }
 
-const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, reduce, image, oldPrice}: PropsForCards) => {
+const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, reduce, image, oldPrice, _id}: PropsForCards) => {
+
+    const navigate = useNavigate()
 
     var precision: string;
     var reductionColor: string;
@@ -25,7 +29,7 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
         ratingToPass = 0;
     }
     else ratingToPass = parseFloat(rating).toPrecision(3);
-
+    console.log(rating)
     var reviewsToPass: any;
     if (reviews === undefined) {
         reviewsToPass = 0;
@@ -72,8 +76,12 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
     precision = calculatePercent(oldPrice as string, price);
     reductionColor = reductionColorCalculator(precision);
 
+    const onClickCard = (id: string) => {
+        navigate(`/product/${id}`)
+    }
+
   return (
-    <div className="cardItem">
+    <div className="cardItem" onClick={() => onClickCard(_id)}>
         <div className="cardImg">
             <img className="cartImage" src={image} alt="image" />
         </div>

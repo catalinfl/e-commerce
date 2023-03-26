@@ -6,6 +6,7 @@ import CardProduct from '../Card/CardProduct';
 import { Route } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 type SortProducts = {
   sorted: "name" | "relevance" | "growing" | "descending" | "most sold" | "biggest discount"
@@ -21,8 +22,8 @@ type ProductData = {
   category: string,
   description: string,
   discount: number,
-  rating: number,
-  reviews: number,
+  reviewStars: string,
+  reviewComments: string,
   brand: string,
   warranty: string,
   availability: string,
@@ -51,6 +52,7 @@ const Searchpage: React.FC = () => {
     })
   }
 
+  console.log(productData[0]._id)
 
 
   return (
@@ -109,8 +111,11 @@ const Searchpage: React.FC = () => {
                         price={product.price}
                         title={product.name}
                         image={product.img[1]}
-                        rating="30"/>
-                      )
+                        rating={product.reviewStars}
+                        reviews={product.reviewComments.length.toString()}
+                        _id={product._id}
+                        />
+                        )
                     })}
                   </div> 
                 : <p> Nu s-au gasit produse </p>}
