@@ -80,8 +80,6 @@ const Navbar: React.FC = () => {
         verifyCategory()
     })
 
-
-
     const searchbarFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.length >= 3) {
             setSearch(e.target.value.toLowerCase())

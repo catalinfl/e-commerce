@@ -28,7 +28,7 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
         ratingToPass = 0;
     }
     else ratingToPass = parseFloat(rating).toPrecision(3);
-    console.log(rating)
+
     var reviewsToPass: any;
     if (reviews === undefined) {
         reviewsToPass = 0;
