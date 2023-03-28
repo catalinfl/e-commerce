@@ -6,12 +6,12 @@ import CardProduct from '../Card/CardProduct';
 import { Route, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
+import ProductMapping from './ProductMapping';
 
-type SortProductsType = "name" | "relevance" | "growing" | "descending" | "most sold" | "biggest discount"
+export type SortProductsType = "name" | "relevance" | "growing" | "descending" | "most sold" | "biggest discount"
 
 
-type ProductData = {
+export type ProductData = {
   _id: string,
   name: string,
   price: string,
@@ -32,60 +32,117 @@ type ProductData = {
 const Searchpage: React.FC = () => {
 
   const { category } = useParams<{ category: string }>()
-  const [sortProducts, setSortProducts] = useState<SortProductsType>("relevance");
+  const [sortProducts, setSortProducts] = useState<SortProductsType>("name");
   const [productData, setProductData] = useState<ProductData[]>([]);
-
-  useEffect(() => {
-    fetchData()
-  }, [category])  
-
+  const [localData, setLocalData] = useState<ProductData[]>([]);
+  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
+  
   const fetchData = async () => {
     axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
     .then(res => {
-      setProductData(res.data);
+      setProductData(res.data)
+      setIsDataFetched(true);
+      setLocalData(res.data)
     })
     .catch(err => {
       console.log(err)
     })
   }
 
-  const sortOptionHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  // useEffect(() => {
+  //   fetchData()
+  // }, [sortProducts])  
+
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const setSortingMethod = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value !== sortProducts) {
     setSortProducts(e.target.value as SortProductsType)
+    }
   }
 
-
-  function sortProductsHandler (sortProducts: SortProductsType) {
-    switch (sortProducts) {
-      case "name":
-        return productData.sort((a: ProductData, b: ProductData) => {
-          return a.name.localeCompare(b.name)
-        })
-      case "relevance":
-        return productData.sort((a: ProductData, b: ProductData) => {
-          return parseInt(a.reviewStars) - parseInt(b.reviewStars)
-        })
-      case "growing":
-        return productData.sort((a: ProductData, b: ProductData) => {
-          return parseInt(b.price) - parseInt(a.price)
-        })
-      case "descending":
-        return productData.sort((a: ProductData, b: ProductData) => {
-          return parseInt(a.price) - parseInt(b.price)
-        })
-      case "most sold":
-        return setProductData([productData[0]] as ProductData[])
-      case "biggest discount":
-        return productData.sort((a, b) => Number(b.discount) - Number(a.discount))
-      default:
-        return productData.sort((a, b) => a.name.localeCompare(b.name))
+  const setSortedArray = (method: string) => {
+    if (method === "relevance") {
+      setProductData(localData.sort((a: any, b: any) => {
+        if (a.reviewStars > b.reviewStars) {
+          return 1
+        }
+        if (a.reviewStars < b.reviewStars) {
+          return -1
+        }
+        return 0
+      }))
+    }
+    // do this if statement for all the other sorting methods
+    if (method === "name") {
+      setProductData(localData.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1
+        }
+        if (a.name < b.name) {
+          return -1
+        }
+        return 0
+      }))
+    }
+    // do this if statement for all the other sorting methods
+    if (method === "growing") {
+      setProductData(localData.sort((a, b) => {
+        if (a.price < b.price) {
+          return 1
+        }
+        if (a.price > b.price) {
+          return -1
+        }
+        return 0
+      }))
+    }
+    // do this if statement for all the other sorting methods
+    if (method === "descending") {
+      setProductData(localData.sort((a, b) => {
+        if (a.price > b.price) {
+          return 1
+        }
+        if (a.price < b.price) {
+          return -1
+        }
+        return 0
+      }))
+    }
+    if (method === "most sold") {
+      setProductData(localData.sort((a, b) => {
+        if (a.quantity > b.quantity) {
+          return 1
+        }
+        if (a.quantity < b.quantity) {
+          return -1
+        }
+        return 0
+      }
+      ))
+    }
+    // do this if statement for all the other sorting methods
+    if (method === "biggest discount") {
+      setProductData(localData.sort((a, b) => {
+        if (a.discount > b.discount) {
+          return 1
+        }
+        if (a.discount < b.discount) {
+          return -1
+        }
+        return 0
+      }))
     }
   }
 
   useEffect(() => {
-    sortProductsHandler(sortProducts);
-    setProductData(productData);
-  }, [sortProducts])
+    setSortedArray(sortProducts)
+  }, [sortProducts, productData])
 
+  console.log(localData)
 
   return (
 
@@ -125,7 +182,7 @@ const Searchpage: React.FC = () => {
               </p>
               <div className="searchpageSort">
                 <p> Sorteaza dupa: </p>
-                <select className="searchpageSelection" id="selection" onChange={sortOptionHandler}>
+                <select className="searchpageSelection" value={sortProducts} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortingMethod(e)}>
                   <option className="searchpageOption" value="relevance"> Relevanta </option> 
                   <option className="searchpageOption" value="name"> Nume </option> 
                   <option className="searchpageOption" value="growing"> Crescator </option> 
@@ -134,24 +191,7 @@ const Searchpage: React.FC = () => {
                   <option className="searchpageOption" value="biggest discount"> Cel mai mare discount </option> 
                 </select>
               </div>
-              <div className="searchpageItemsContainer">
-                { productData ? 
-                  <div className="searchpageItemsFound">
-                    {productData.map((product: ProductData) => {
-                      return (
-                        <CardProduct
-                        price={product.price}
-                        title={product.name}
-                        image={product.img[1]}
-                        rating={product.reviewStars}
-                        reviews={product.reviewComments.length.toString()}
-                        _id={product._id}
-                        />
-                        )
-                    })}
-                  </div> 
-                : <p> Nu s-au gasit produse </p>}
-            </div>
+              <ProductMapping productData={productData} sortProducts={sortProducts}/>
           </div>
         </div>
       </div>
