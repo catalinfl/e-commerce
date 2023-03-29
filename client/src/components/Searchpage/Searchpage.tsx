@@ -36,6 +36,7 @@ const Searchpage: React.FC = () => {
   const [productData, setProductData] = useState<ProductData[]>([]);
   const [localData, setLocalData] = useState<ProductData[]>([]);
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
+  const [oscillant, setOscillant] = useState<boolean | string>(false);
   
   const fetchData = async () => {
     axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
@@ -49,22 +50,17 @@ const Searchpage: React.FC = () => {
     })
   }
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [sortProducts])  
-
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [category])
 
-  const setSortingMethod = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value !== sortProducts) {
-    setSortProducts(e.target.value as SortProductsType)
-    }
-  }
+
+
+
 
   const setSortedArray = (method: string) => {
+    setOscillant(!oscillant)
     if (method === "relevance") {
       setProductData(localData.sort((a: any, b: any) => {
         if (a.reviewStars > b.reviewStars) {
@@ -126,26 +122,22 @@ const Searchpage: React.FC = () => {
     }
     // do this if statement for all the other sorting methods
     if (method === "biggest discount") {
-      setProductData(localData.sort((a, b) => {
-        if (a.discount > b.discount) {
-          return 1
-        }
-        if (a.discount < b.discount) {
-          return -1
-        }
-        return 0
-      }))
+        setProductData(localData.sort((a: any, b: any) => {
+          if (a.reviewStars < b.reviewStars) {
+            return 1
+          }
+          if (a.reviewStars > b.reviewStars) {
+            return -1
+          }
+          return 0
+        }))
     }
   }
 
-  useEffect(() => {
-    setSortedArray(sortProducts)
-  }, [sortProducts, productData])
 
-  console.log(localData)
+
 
   return (
-
 
     <div className="searchpage">
         <p className="searchCategory"> IT / Calculatoare / <span className="searchC"> Test </span> </p>
@@ -182,7 +174,7 @@ const Searchpage: React.FC = () => {
               </p>
               <div className="searchpageSort">
                 <p> Sorteaza dupa: </p>
-                <select className="searchpageSelection" value={sortProducts} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortingMethod(e)}>
+                <select className="searchpageSelection" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortedArray(e.target.value)}>
                   <option className="searchpageOption" value="relevance"> Relevanta </option> 
                   <option className="searchpageOption" value="name"> Nume </option> 
                   <option className="searchpageOption" value="growing"> Crescator </option> 

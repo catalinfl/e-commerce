@@ -12,8 +12,6 @@ const ProductMapping = ({ productData, sortProducts }: ProductMappingType) => {
   return (
         <div className="searchpageItemsContainer">
                 <div className="searchpageItemsFound">
-                {sortProducts}  
-                // problema este aici, 
                 {productData.map((product: ProductData, index: number) => {
                     return (
                         <CardProduct

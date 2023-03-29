@@ -11,12 +11,8 @@ interface Images {
     src: string;
 }
 
-type sliderCircleCss = {
-    color: string;
-}
-
 const Slider: React.FC = () => {
-    
+
     const [imageCount, setImageCount] = useState<number>(0);
     const [present, setPresent] = useState<boolean>(false);
     const [intervalFunctionActive, setIntervalFunctionActive] = useState<boolean>(true);
