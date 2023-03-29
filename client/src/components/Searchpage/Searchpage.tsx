@@ -37,7 +37,10 @@ const Searchpage: React.FC = () => {
   const [localData, setLocalData] = useState<ProductData[]>([]);
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [oscillant, setOscillant] = useState<boolean | string>(false);
-  
+  const [isResultFiltered, setIsResultFiltered] = useState<boolean>(false);
+
+
+
   const fetchData = async () => {
     axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
     .then(res => {
@@ -52,11 +55,18 @@ const Searchpage: React.FC = () => {
 
 
   useEffect(() => {
-    fetchData()
+    if (category !== undefined) { 
+      setIsResultFiltered(true);
+      fetchData()
+    }
+    else {
+      setIsResultFiltered(false);
+    }
   }, [category])
 
 
 
+  console.log(isResultFiltered)
 
 
   const setSortedArray = (method: string) => {
@@ -72,7 +82,6 @@ const Searchpage: React.FC = () => {
         return 0
       }))
     }
-    // do this if statement for all the other sorting methods
     if (method === "name") {
       setProductData(localData.sort((a, b) => {
         if (a.name > b.name) {
@@ -84,25 +93,23 @@ const Searchpage: React.FC = () => {
         return 0
       }))
     }
-    // do this if statement for all the other sorting methods
     if (method === "growing") {
       setProductData(localData.sort((a, b) => {
-        if (a.price < b.price) {
+        if (a.price > b.price) {
           return 1
         }
-        if (a.price > b.price) {
+        if (a.price < b.price) {
           return -1
         }
         return 0
       }))
     }
-    // do this if statement for all the other sorting methods
     if (method === "descending") {
       setProductData(localData.sort((a, b) => {
-        if (a.price > b.price) {
+        if (a.price < b.price) {
           return 1
         }
-        if (a.price < b.price) {
+        if (a.price > b.price) {
           return -1
         }
         return 0
@@ -120,13 +127,12 @@ const Searchpage: React.FC = () => {
       }
       ))
     }
-    // do this if statement for all the other sorting methods
     if (method === "biggest discount") {
         setProductData(localData.sort((a: any, b: any) => {
-          if (a.reviewStars < b.reviewStars) {
+          if (a.reviewStars > b.reviewStars) {
             return 1
           }
-          if (a.reviewStars > b.reviewStars) {
+          if (a.reviewStars < b.reviewStars) {
             return -1
           }
           return 0
@@ -134,14 +140,12 @@ const Searchpage: React.FC = () => {
     }
   }
 
-
-
-
   return (
 
     <div className="searchpage">
         <p className="searchCategory"> IT / Calculatoare / <span className="searchC"> Test </span> </p>
-      <div className="searchpageContainer">
+     { isResultFiltered ?
+     <div className="searchpageContainer">
         <div className="searchpageCheckContainers">
             <div className="searchpageItem">
               <h3 className="searchpageCategories"> Disponibilitate </h3>
@@ -186,6 +190,12 @@ const Searchpage: React.FC = () => {
               <ProductMapping productData={productData} sortProducts={sortProducts}/>
           </div>
         </div>
+        :
+        <div className="searchpageItemsSearched">
+          <p> Search a result </p>
+          <input type="text" />
+        </div>
+  }
       </div>
   )
 }

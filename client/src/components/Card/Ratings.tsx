@@ -4,24 +4,20 @@ import { IoMdStar, IoMdStarHalf, IoMdStarOutline } from 'react-icons/io'
 
 
 interface PropsForStars {
-  stars: number | (() => number) 
+  stars: number 
   reviews?: number
 }
 
 
 const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
-
-
-  const [useStars, setUseStars] = useState<number>(stars as number);
-  const [useReviews, setUseReviews] = useState<number | (() => number) | undefined>(reviews);
   
+
   if (reviews === 0) {
     stars = 0;
   }
   
 
   return (
-    <>
     <div className="cardRating">
     <div className="cardStars">
     { 
@@ -107,9 +103,9 @@ const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
       </> : null
     }
     </div>
-    <p className="cardRatingNumber"> {stars ? useStars : null}       ({reviews} reviews) </p> 
+    <p className="cardRatingNumber"> {stars} </p> 
+    <p className="cardRatingNumber"> ({reviews} reviews) </p>     
     </div>
-      </>
   )
 }
 

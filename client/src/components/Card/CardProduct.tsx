@@ -33,11 +33,11 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
     if (reviews === undefined) {
         reviewsToPass = 0;
     }
-    else reviewsToPass = parseInt(reviews);
+    else reviewsToPass = reviews.length;
 
    
 
-    const calculatePercent: Function = (oldPrice: string, price: string): string => {    
+    const calculatePercent = (oldPrice: string, price: string): string => {    
         var oldPriceInt: number = parseInt(oldPrice as string);
         var newPriceInt: number = parseInt(price as string);
         var percent: any;
@@ -78,6 +78,7 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
     const onClickCard = (id: string) => {
         navigate(`/product/${id}`)
     }
+
 
   return (
     <div className="cardItem" onClick={() => onClickCard(_id)}>

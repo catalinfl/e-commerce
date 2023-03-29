@@ -11,3 +11,4 @@ export const createError: Function = (status: number, message: string) => {
     error.message = message;
     return error;
 }
+
