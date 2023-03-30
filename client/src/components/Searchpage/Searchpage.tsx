@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Searchpage.scss'
 import { Checkbox } from 'pretty-checkbox-react'
 import '@djthoms/pretty-checkbox';
@@ -35,17 +35,15 @@ const Searchpage: React.FC = () => {
   const [sortProducts, setSortProducts] = useState<SortProductsType>("name");
   const [productData, setProductData] = useState<ProductData[]>([]);
   const [localData, setLocalData] = useState<ProductData[]>([]);
-  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [oscillant, setOscillant] = useState<boolean | string>(false);
   const [isResultFiltered, setIsResultFiltered] = useState<boolean>(false);
-
-
+  const refRange = useRef<HTMLInputElement>(null);
+  const [priceRange, setPriceRange] = useState<number>(0);
 
   const fetchData = async () => {
     axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
     .then(res => {
       setProductData(res.data)
-      setIsDataFetched(true);
       setLocalData(res.data)
     })
     .catch(err => {
@@ -63,11 +61,6 @@ const Searchpage: React.FC = () => {
       setIsResultFiltered(false);
     }
   }, [category])
-
-
-
-  console.log(isResultFiltered)
-
 
   const setSortedArray = (method: string) => {
     setOscillant(!oscillant)
@@ -140,6 +133,20 @@ const Searchpage: React.FC = () => {
     }
   }
 
+  const getMaxPrice = () => {
+    let max = 0;
+    localData.forEach((item: any) => {
+      if (parseInt(item.price) > max) {
+        max = parseInt(item.price)
+      }
+    })
+    return max;
+  }
+
+  const onChangeRefRange = () => {
+      setPriceRange(parseInt(refRange.current?.value as string)) 
+  }
+
   return (
 
     <div className="searchpage">
@@ -150,17 +157,16 @@ const Searchpage: React.FC = () => {
             <div className="searchpageItem">
               <h3 className="searchpageCategories"> Disponibilitate </h3>
                 <div className="searchpageItemCheckbox">
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
+                  <Checkbox shape="curve"  animation="smooth" color="success"> În magazin </Checkbox>
+                  <Checkbox shape="curve"  animation="smooth" color="success"> Ultimele produse </Checkbox>
+                  <Checkbox shape="curve"  animation="smooth" color="success"> Indisponibil </Checkbox>
                 </div>
             </div>
             <div className="searchpageItem">
               <h3 className="searchpageCategories"> Pret </h3>
               <div className="searchpageItemCheckbox">
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
-                  <Checkbox shape="curve"  animation="smooth" color="success"> blabla </Checkbox>
+                  <input ref={refRange} type="range" min={0} step={10} max={getMaxPrice()} onChange={() => onChangeRefRange()} />
+                  <p> {priceRange} lei </p>
               </div>
             </div>
             <div className="searchpageItem">

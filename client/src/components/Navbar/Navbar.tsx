@@ -11,10 +11,11 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import axios, { Axios, AxiosResponse } from 'axios'
 import CartImage from '../../assets/CartImage.png'
 import { ProductProps } from '../Product/Product'
-import { AxiosHeaders } from "axios"
+import { Range } from 'react-range'
 
 
-const Navbar: React.FC = () => {
+
+const Navbar = () => {
     
     const [openCart, setOpenCart] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
@@ -90,6 +91,8 @@ const Navbar: React.FC = () => {
 
 
     const navigateOnClick = (id: string) => {
+    
+        // search by product 
         navigate(`/product/${id}`)
     }
 
@@ -106,6 +109,8 @@ const Navbar: React.FC = () => {
         if (e.ctrlKey && e.key === 'a') {
             setPartiallyResponses([])
         }
+
+        // search category
         if (e.key === "Enter" && category) {
             navigate(`/search/${category}`)
         }
