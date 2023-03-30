@@ -16,9 +16,6 @@ import { AxiosHeaders } from "axios"
 
 const Navbar: React.FC = () => {
     
-
-
-    
     const [openCart, setOpenCart] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
     const [isBarOn, setIsBarOn] = useState<boolean>(false);
@@ -67,7 +64,6 @@ const Navbar: React.FC = () => {
     
     const verifyCategory = () => {
         var param  = location.pathname.split('/')[2]
-        console.log(param, category)
         if (category === param || category === undefined) {
             setIsMenuOpen(false)
         }
@@ -94,8 +90,6 @@ const Navbar: React.FC = () => {
 
 
     const navigateOnClick = (id: string) => {
-    
-        // search by product 
         navigate(`/product/${id}`)
     }
 
@@ -112,8 +106,6 @@ const Navbar: React.FC = () => {
         if (e.ctrlKey && e.key === 'a') {
             setPartiallyResponses([])
         }
-
-        // search category
         if (e.key === "Enter" && category) {
             navigate(`/search/${category}`)
         }

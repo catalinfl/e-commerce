@@ -22,10 +22,6 @@ const router  = createBrowserRouter([
     element: <CardPage/>
   },
   {
-    path: '/search',
-    element: <Search />,
-  },
-  {
     path: '/search/:category',
     element: <Search />,
   },

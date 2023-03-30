@@ -66,7 +66,6 @@ export const getProductQuery = async (req: Request, res: Response) => {
 
         // search query 
         let query: QueryType = {};
-
         if (price) {
             query.price = price
         }
@@ -90,6 +89,22 @@ export const getProductQuery = async (req: Request, res: Response) => {
     }
 }
 
+export const getCategories = async (req: Request, res: Response) => {
+    try {
+        const products = await Product.find();
+        let categories: string[] = [];
+        products.map((product) => {
+            if (!categories.includes(product.categories)) {
+                categories.push(product.categories);
+            }
+        })
+        res.status(200).json(categories);
+    }
+    catch(err) {
+        res.status(404).json(err);
+    }
+}
+
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const getProducts = await Product.find();
@@ -98,7 +113,6 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
     catch(err) {
         res.status(403).json(err);
     }
-
 }
 
 export const editProduct = async (req: Request, res: Response) => {

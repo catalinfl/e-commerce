@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './CategoriesMenu.scss'
 import {AiOutlineArrowRight} from 'react-icons/ai'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+
+type CategoriesMenuType = {
+    categories: string[]
+}
 
 
-const CategoriesMenu: React.FC = () => {
 
+const CategoriesMenu = ({categories}: CategoriesMenuType) => {
 
     return (
         <> 
@@ -13,11 +19,15 @@ const CategoriesMenu: React.FC = () => {
         </div>
         <div className="categoriesMenu">
         <div className="categoriesMenuContainer">
-            <p className="categoriesItems"> Camnsdnsder <AiOutlineArrowRight className="categoriesIcon" /></p>
-            <p className="categoriesItems"> dolorores <AiOutlineArrowRight className="categoriesIcon" /> </p>
-            <p className="categoriesItems">  dffamet <AiOutlineArrowRight className="categoriesIcon" /> </p>
-            <p className="categoriesItems"> uatewrtweatdolor <AiOutlineArrowRight className="categoriesIcon" /> </p>
-            <p className="categoriesItems"> wetwtawetatolor <AiOutlineArrowRight className="categoriesIcon" /> </p>
+            {categories.map((category: string) => {
+                return (
+                    <p className="categoriesItems">
+                            <Link to={`/search/${category}`} className="categoriesLink"> 
+                            {category} <AiOutlineArrowRight className="categoriesIcon"  />
+                            </Link>
+                    </p>
+                )}
+            )}
         </div>
     </div>
 </div>
