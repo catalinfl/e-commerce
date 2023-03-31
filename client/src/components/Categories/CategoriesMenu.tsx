@@ -22,7 +22,7 @@ const CategoriesMenu = ({categories}: CategoriesMenuType) => {
             {categories.map((category: string) => {
                 return (
                     <p className="categoriesItems">
-                            <Link to={`/search/${category}`} className="categoriesLink"> 
+                            <Link to={`/search/${category}`} className="categoriesLink" style={{textDecoration: 'none', color: 'grey'}}> 
                             {category} <AiOutlineArrowRight className="categoriesIcon"  />
                             </Link>
                     </p>

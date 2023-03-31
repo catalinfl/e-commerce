@@ -22,7 +22,6 @@ const Categories: React.FC = () => {
   useEffect(() => {
       fetchData();
     }, [])
-    console.log(categories)
 
 
   return (

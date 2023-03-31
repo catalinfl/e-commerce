@@ -11,7 +11,6 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import axios, { Axios, AxiosResponse } from 'axios'
 import CartImage from '../../assets/CartImage.png'
 import { ProductProps } from '../Product/Product'
-import { Range } from 'react-range'
 
 
 

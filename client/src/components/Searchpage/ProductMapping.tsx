@@ -23,6 +23,7 @@ const ProductMapping = ({ productData, sortProducts }: ProductMappingType) => {
                             image={product.img}
                             rating={product.reviewStars}
                             reviews={product.reviewComments}
+                            
                         />
                     )
                 })

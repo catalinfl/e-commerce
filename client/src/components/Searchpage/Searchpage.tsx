@@ -7,6 +7,7 @@ import { Route, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ProductMapping from './ProductMapping';
+import MultiRangeSlider, { ChangeResult } from "multi-range-slider-react"
 
 export type SortProductsType = "name" | "relevance" | "growing" | "descending" | "most sold" | "biggest discount"
 
@@ -26,8 +27,6 @@ export type ProductData = {
   warranty: string,
   availability: string,
 }
-
-
 
 const Searchpage: React.FC = () => {
 
@@ -133,19 +132,47 @@ const Searchpage: React.FC = () => {
     }
   }
 
+  const [minValue, setMinValue] = useState<number>(0);
+  const [maxValue, setMaxValue] = useState<number>(0);
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] =  useState<number>(100);
+  const [maxValueToBeWritten, setMaxValueToBeWritten] = useState<number>(max);
+  const [minValueToBeWritten, setMinValueToBeWritten] = useState<number>(min);
+
+  
   const getMaxPrice = () => {
-    let max = 0;
-    localData.forEach((item: any) => {
-      if (parseInt(item.price) > max) {
-        max = parseInt(item.price)
-      }
-    })
-    return max;
+    var value = Number.MIN_VALUE;
+    if (localData.length > 0) {
+      localData.forEach((data) => {
+        if (Number(data.price) > value) {
+          value = Number(data.price);
+        }
+      })
+    }
+    setMax(value)
+    setMaxValue(value)
+  }
+  
+
+  const getMinPrice = () => {
+    var value = Number.MAX_VALUE;
+    if (localData.length > 0) {
+      localData.forEach((item) => {
+        if (parseInt(item.price) < value) {
+          value = parseInt(item.price)
+        }
+      })
+    }
+    setMinValue(value)
+    setMin(value)
   }
 
-  const onChangeRefRange = () => {
-      setPriceRange(parseInt(refRange.current?.value as string)) 
-  }
+  useEffect(() => {
+    getMaxPrice();
+    getMinPrice();
+}, [localData])
+
+console.log(min, minValue)
 
   return (
 
@@ -165,8 +192,32 @@ const Searchpage: React.FC = () => {
             <div className="searchpageItem">
               <h3 className="searchpageCategories"> Pret </h3>
               <div className="searchpageItemCheckbox">
-                  <input ref={refRange} type="range" min={0} step={10} max={getMaxPrice()} onChange={() => onChangeRefRange()} />
-                  <p> {priceRange} lei </p>
+                <MultiRangeSlider min={min}
+					max={max}
+          ruler={false}
+          label={false}
+          stepOnly={true}
+          labels={["csu", "csu"]}
+					step={10}
+					minValue={minValue}
+					maxValue={maxValue}
+          barLeftColor={"white"}
+	        barRightColor={"white"}
+	        barInnerColor={"lime"}          
+	        thumbLeftColor={"green"}
+	        thumbRightColor={"green"}
+          preventWheel={false}
+          style={{
+            width: "80%", 
+            padding: "0.85rem 1rem",
+            border: 'none'
+          }}
+          onChange={(e: ChangeResult) => {
+            setMinValueToBeWritten(e.minValue)
+            setMaxValueToBeWritten(e.maxValue)
+          }}
+          					/>
+                  <p> De la {minValueToBeWritten} lei la {maxValueToBeWritten} lei </p>
               </div>
             </div>
             <div className="searchpageItem">
@@ -199,9 +250,8 @@ const Searchpage: React.FC = () => {
         :
         <div className="searchpageItemsSearched">
           <p> Search a result </p>
-          <input type="text" />
         </div>
-  }
+        }
       </div>
   )
 }
