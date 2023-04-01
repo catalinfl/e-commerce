@@ -217,7 +217,7 @@ console.log(min, minValue)
             setMaxValueToBeWritten(e.maxValue)
           }}
           					/>
-                  <p> De la {minValueToBeWritten} lei la {maxValueToBeWritten} lei </p>
+                  <p> De la <span style={{color: 'green', fontWeight: '600'}}> {minValueToBeWritten} lei </span> la <span style={{color: 'green', fontWeight: '600'}}> {maxValueToBeWritten} lei </span> </p>
               </div>
             </div>
             <div className="searchpageItem">

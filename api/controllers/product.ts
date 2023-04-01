@@ -6,10 +6,10 @@ import Brand from "../models/Brand";
 
 
 type QueryType = {
-    price?: string,
+    minPrice?: string,
+    maxPrice?: string,
     disponibility?: string,
-    brand?: string,
-    top?: string,
+    top?: string
 }
 
 
@@ -59,18 +59,18 @@ export const getProduct = async (req: Request, res: Response) => {
 export const getProductQuery = async (req: Request, res: Response) => {
     try {
         if (req.params.categories) {
-        const price = req.query.price as string;
-        const brand = req.query.brand as string;
+        const minPrice = req.query.minPrice as string;
+        const maxPrice = req.query.maxPrice as string;
         const disponibility = req.query.disponibility as string;
         const top = req.query.top as string;
 
         // search query 
         let query: QueryType = {};
-        if (price) {
-            query.price = price
+        if (minPrice) {
+            query.minPrice = minPrice;
         }
-        if (brand) {
-            query.brand = brand
+        if (maxPrice) {
+            query.maxPrice = maxPrice;
         }
         if (disponibility) {
             query.disponibility = disponibility
@@ -79,14 +79,32 @@ export const getProductQuery = async (req: Request, res: Response) => {
             query.top = top;
         }
 
-        const queriedProducts = await Product.find(
-            query);
-        res.status(200).json(queriedProducts)
+        const queriedProducts = await Product.find({
+            categories: req.params.categories
+        });
+
+        const getQueriedProducts: any = []
+
+        if (query.disponibility) {
+            getQueriedProducts.filter((product: any) => {
+                if (product.inStock.length >= 3) {
+                    return product
+                }
+            })
+        }
+        if (query.minPrice && query.maxPrice) {
+            queriedProducts.map((product) => {
+                if (Number(product.price) >= Number(query.minPrice) && Number(product.price) <= Number(query.maxPrice)) {
+                    getQueriedProducts.push(product)
+                    }
+                })
+            }
+        res.status(200).json(getQueriedProducts)
+        }
     }
-}
-    catch(err) {
-        res.status(404).json(err);
-    }
+        catch(err) {
+            res.status(404).json(err);
+        }
 }
 
 export const getCategories = async (req: Request, res: Response) => {
