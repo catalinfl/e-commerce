@@ -38,9 +38,18 @@ const Searchpage: React.FC = () => {
   const [isResultFiltered, setIsResultFiltered] = useState<boolean>(false);
   const refRange = useRef<HTMLInputElement>(null);
   const [priceRange, setPriceRange] = useState<number>(0);
+  const categoryURL = `http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`
+
+
+  const [minValue, setMinValue] = useState<number>(0);
+  const [maxValue, setMaxValue] = useState<number>(0);
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] =  useState<number>(100);
+  const [maxValueToBeWritten, setMaxValueToBeWritten] = useState<number>(max);
+  const [minValueToBeWritten, setMinValueToBeWritten] = useState<number>(min);
 
   const fetchData = async () => {
-    axios.get(`http://localhost:3001/product/search/${category?.slice(0, 1)?.toUpperCase() as string + category?.slice(1)}`)
+    const response = await axios.get(categoryURL)
     .then(res => {
       setProductData(res.data)
       setLocalData(res.data)
@@ -59,7 +68,12 @@ const Searchpage: React.FC = () => {
     else {
       setIsResultFiltered(false);
     }
-  }, [category])
+  }, [category, minValueToBeWritten, maxValueToBeWritten])
+
+  useEffect(() => {
+    getMaxPrice();
+    getMinPrice();
+  }, [localData])
 
   const setSortedArray = (method: string) => {
     setOscillant(!oscillant)
@@ -132,12 +146,7 @@ const Searchpage: React.FC = () => {
     }
   }
 
-  const [minValue, setMinValue] = useState<number>(0);
-  const [maxValue, setMaxValue] = useState<number>(0);
-  const [min, setMin] = useState<number>(0);
-  const [max, setMax] =  useState<number>(100);
-  const [maxValueToBeWritten, setMaxValueToBeWritten] = useState<number>(max);
-  const [minValueToBeWritten, setMinValueToBeWritten] = useState<number>(min);
+
 
   
   const getMaxPrice = () => {
@@ -167,12 +176,7 @@ const Searchpage: React.FC = () => {
     setMin(value)
   }
 
-  useEffect(() => {
-    getMaxPrice();
-    getMinPrice();
-}, [localData])
 
-console.log(min, minValue)
 
   return (
 
@@ -197,7 +201,6 @@ console.log(min, minValue)
           ruler={false}
           label={false}
           stepOnly={true}
-          labels={["csu", "csu"]}
 					step={10}
 					minValue={minValue}
 					maxValue={maxValue}

@@ -85,13 +85,6 @@ export const getProductQuery = async (req: Request, res: Response) => {
 
         const getQueriedProducts: any = []
 
-        if (query.disponibility) {
-            getQueriedProducts.filter((product: any) => {
-                if (product.inStock.length >= 3) {
-                    return product
-                }
-            })
-        }
         if (query.minPrice && query.maxPrice) {
             queriedProducts.map((product) => {
                 if (Number(product.price) >= Number(query.minPrice) && Number(product.price) <= Number(query.maxPrice)) {
