@@ -22,8 +22,7 @@ const ProductMapping = ({ productData, sortProducts }: ProductMappingType) => {
                             oldPrice={product.price}
                             image={product.img}
                             rating={product.reviewStars}
-                            reviews={product.reviewComments}
-                            
+                            reviews={product.reviewComments} 
                         />
                     )
                 })

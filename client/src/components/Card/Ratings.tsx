@@ -11,7 +11,6 @@ interface PropsForStars {
 
 const Ratings: React.FC<PropsForStars> = ({stars, reviews}: PropsForStars) => {
   
-
   if (reviews === 0) {
     stars = 0;
   }

@@ -16,7 +16,7 @@ const TopOferts = ({products}: TopOfertsProps) => {
     useEffect(() => {
         setTopProducts(products)
     }, [products])
-    
+
 
     return (
     <div className="topOferts">
@@ -25,7 +25,8 @@ const TopOferts = ({products}: TopOfertsProps) => {
             <div className="cardsContainer">
             {topProducts?.map((product: any, index: number) => 
                 <Link key={index}  style={{textDecoration: 'none'}} to={`product/${product._id}`}>
-                <CardProduct _id={product._id} price={product.price} title={product.name as string} rating={product.reviewStars} image={product.img[0+index%product.img.length]}
+                <CardProduct _id={product._id} price={product.price} title={product.name as string} rating={product.reviewStars}
+                reviews={product.reviewComments} image={product.img[0+index%product.img.length]}
                 oldPrice={product.oldPrice} />
                 </Link>
                 )}

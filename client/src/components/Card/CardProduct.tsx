@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 interface PropsForCards {
     price: string ,
     title: string,
-    rating: string | undefined,
+    rating?: string | undefined,
     reduce?: string,
     image: string,
     oldPrice?: undefined  | string,
@@ -20,7 +20,7 @@ interface PropsForCards {
 const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, reduce, image, oldPrice, _id}: PropsForCards) => {
 
     const navigate = useNavigate()
-
+    console.log(rating)
     var precision: string;
     var reductionColor: string;
 
@@ -31,6 +31,7 @@ const CardProduct: React.FC<PropsForCards> = ({ price, title, rating, reviews, r
     else ratingToPass = parseFloat(rating).toPrecision(3);
 
     var reviewsToPass: any;
+
     if (reviews === undefined) {
         reviewsToPass = 0;
     }
